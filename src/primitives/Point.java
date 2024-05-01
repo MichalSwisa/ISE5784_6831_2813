@@ -23,7 +23,7 @@ public class Point {
             throw new IllegalArgumentException("ZERO vector not allowed");
         }
 
-        return new Vector(result);
+        return new Vector(result);//
     }
 
 
