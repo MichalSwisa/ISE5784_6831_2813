@@ -29,7 +29,7 @@ public class Point {
 
 
     public Double distance(Point point){
-        return this.distanceSquared(point);
+        return Math.sqrt(this.distanceSquared(point));
     }
     public Double distanceSquared(Point point){
         double x1 = xyz.d1;
@@ -50,6 +50,6 @@ public class Point {
 
     public boolean equals(Object obj){
         if (this == obj) return true;
-        return (obj instanceof Double3 other) && xyz.equals(other.xyz);
+        return (obj instanceof Double3 other) && xyz.equals(other);
     }
 }
