@@ -1,5 +1,8 @@
 package geometries;
 
+import primitives.Point;
+import primitives.Vector;
+
 public class Plane {
     final Point q;
     final Vector normal;
