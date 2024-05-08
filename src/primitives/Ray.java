@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.Objects;
+
 /**
  * Represents a ray in a three-dimensional space.
  */
@@ -7,11 +9,11 @@ public class Ray {
     /**
      * The starting point of the ray.
      */
-    final Point head;
+    private final Point head;
     /**
      * The direction vector of the ray, normalized.
      */
-    final Vector direction;
+    private final Vector direction;
 
     /**
      * Constructs a ray with a given starting point and direction.
@@ -31,7 +33,7 @@ public class Ray {
      * @return True if the given object is a Ray with the same head and direction, false otherwise.
      */
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) return true;
         return (obj instanceof Ray other) && head.equals(other.head) && direction.equals(other.direction);
     }
