@@ -14,7 +14,7 @@ public class Vector extends Point {
      */
     public Vector(double x, double y, double z) {
         super(x, y, z);
-        if (xyz.equals(Double3.ZERO)) throw new IllegalArgumentException("ZERO vector not allowed");
+        if (x == 0 && y == 0 && z == 0) throw new IllegalArgumentException("ZERO vector not allowed");
     }
 
     /**
@@ -69,19 +69,15 @@ public class Vector extends Point {
     /**
      * Calculates the cross product of this vector with another vector.
      *
-     * @param vector The other vector.
+     * @param v The other vector.
      * @return The cross product of this vector and the given vector.
      */
-    public Vector crossProduct(Vector vector) {
-        double x1 = this.xyz.d1;
-        double x2 = this.xyz.d2;
-        double x3 = this.xyz.d3;
-
-        double y1 = vector.xyz.d1;
-        double y2 = vector.xyz.d2;
-        double y3 = vector.xyz.d3;
-
-        return new Vector(x2 * y3 - y2 * x3, x3 * y1 - y3 * x1, x1 * y2 - y1 * x2);
+    public Vector crossProduct(Vector v) {
+        return new Vector(
+                new Double3(
+                        xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2,
+                        xyz.d3 * v.xyz.d1 - xyz.d1 * v.xyz.d3,
+                        xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1));
     }
 
     /**
@@ -108,8 +104,7 @@ public class Vector extends Point {
      * @return The normalized vector.
      */
     public Vector normalize() {
-        double len = this.length();
-        return new Vector(this.xyz.reduce(len));
+        return scale(1 / length());
     }
 
     /**
@@ -122,7 +117,7 @@ public class Vector extends Point {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         return (obj instanceof Vector other)
-                && super.equals(obj); ///??????
+                && super.equals(other); ///??????
     }
 
     /**
@@ -132,6 +127,6 @@ public class Vector extends Point {
      */
     @Override
     public String toString() {
-        return "Vector" + xyz;
+        return "Vector" + super.toString();
     }
 }
