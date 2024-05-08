@@ -6,12 +6,12 @@ import static primitives.Util.isZero;
  * Represents a point in three-dimensional coordinate system.
  */
 public class Point {
-    protected Double3 xyz;
+    protected final Double3 xyz;
 
     /**
      * The origin point (0,0,0).
      */
-    public static final Point ZERO = new Point(0, 0, 0);
+    public static final Point ZERO = new Point(Double3.ZERO);
 
     /**
      * Constructs a new point with the specified coordinates.
@@ -50,13 +50,7 @@ public class Point {
      * @return The vector representing the subtraction of the two points
      */
     public Vector subtract(Point point) {
-        Double3 result = xyz.subtract(point.xyz);
-
-        if (result.equals(Double3.ZERO)) {
-            throw new IllegalArgumentException("ZERO vector not allowed");
-        }
-
-        return new Vector(result);//
+        return new Vector(xyz.subtract(point.xyz));
     }
 
 
@@ -94,8 +88,9 @@ public class Point {
      *
      * @return A string representing the point
      */
+    @Override
     public String toString() {
-        return "Point: " + xyz.toString();
+        return "Point: " + xyz;
     }
 
     /**
@@ -104,8 +99,9 @@ public class Point {
      * @param obj The object to compare with
      * @return True if the objects are equal, false otherwise
      */
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        return (obj instanceof Double3 other) && xyz.equals(other);
+        return (obj instanceof Point other) && xyz.equals(other.xyz);
     }
 }
