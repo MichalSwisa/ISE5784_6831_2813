@@ -2,22 +2,54 @@ package primitives;
 
 import static primitives.Util.isZero;
 
+/**
+ * Represents a point in three-dimensional coordinate system.
+ */
 public class Point {
     protected Double3 xyz;
-    public static final Point ZERO = new Point(0,0,0);
 
+    /**
+     * The origin point (0,0,0).
+     */
+    public static final Point ZERO = new Point(0, 0, 0);
+
+    /**
+     * Constructs a new point with the specified coordinates.
+     *
+     * @param x The X-coordinate value
+     * @param y The Y-coordinate value
+     * @param z The Z-coordinate value
+     */
     public Point(double x, double y, double z) {
-        xyz = new Double3(x,y,z);
+        xyz = new Double3(x, y, z);
     }
+
+    /**
+     * Constructs a new point from a Double3 object.
+     *
+     * @param xyz The Double3 object representing the x, y, and z values
+     */
     Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
-    public Point add(Vector vector){
+    /**
+     * Adds a vector to the point and returns the new point.
+     *
+     * @param vector The vector to add to the current point
+     * @return A new point obtained by adding the vector
+     */
+    public Point add(Vector vector) {
         return new Point(xyz.add(vector.xyz));
     }
 
-    public Vector subtract(Point point){
+    /**
+     * Subtracts a point from this point and returns the resulting vector.
+     *
+     * @param point The point to subtract from this point
+     * @return The vector representing the subtraction of the two points
+     */
+    public Vector subtract(Point point) {
         Double3 result = xyz.subtract(point.xyz);
 
         if (result.equals(Double3.ZERO)) {
@@ -28,11 +60,23 @@ public class Point {
     }
 
 
-
-    public Double distance(Point point){
+    /**
+     * Calculates the distance between this point and another point.
+     *
+     * @param point The other point
+     * @return The distance between the two points
+     */
+    public Double distance(Point point) {
         return Math.sqrt(this.distanceSquared(point));
     }
-    public Double distanceSquared(Point point){
+
+    /**
+     * Calculates the squared distance between this point and another point.
+     *
+     * @param point The other point
+     * @return The squared distance between the two points
+     */
+    public Double distanceSquared(Point point) {
         double x1 = xyz.d1;
         double y1 = xyz.d2;
         double z1 = xyz.d3;
@@ -45,11 +89,22 @@ public class Point {
 
     }
 
+    /**
+     * Returns a string representation of the point.
+     *
+     * @return A string representing the point
+     */
     public String toString() {
-         return "Point: " + xyz.toString();
+        return "Point: " + xyz.toString();
     }
 
-    public boolean equals(Object obj){
+    /**
+     * Checks if this point is equal to another object.
+     *
+     * @param obj The object to compare with
+     * @return True if the objects are equal, false otherwise
+     */
+    public boolean equals(Object obj) {
         if (this == obj) return true;
         return (obj instanceof Double3 other) && xyz.equals(other);
     }
