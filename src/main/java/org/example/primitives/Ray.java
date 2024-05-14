@@ -1,6 +1,4 @@
-package primitives;
-
-import java.util.Objects;
+package org.example.primitives;
 
 /**
  * Represents a ray in a three-dimensional space.

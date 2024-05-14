@@ -1,9 +1,9 @@
 /**
  * 
  */
-package primitives;
+package org.example.primitives;
 
-import static primitives.Util.isZero;
+import static org.example.primitives.Util.isZero;
 
 /**
  * This class will serve all primitive classes based on three numbers

@@ -1,8 +1,8 @@
-package geometries;
+package org.example.geometries;
 
-import primitives.Point;
-import primitives.Vector;
-import primitives.Ray;
+import org.example.primitives.Point;
+import org.example.primitives.Ray;
+import org.example.primitives.Vector;
 
 /**
  * Represents a cylinder in three-dimensional space, defined by its height, axis, and radius.

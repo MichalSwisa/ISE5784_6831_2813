@@ -1,4 +1,4 @@
-package primitives;
+package org.example.primitives;
 
 /**
  * Represents a vector in three-dimensional space.

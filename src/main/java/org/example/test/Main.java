@@ -1,10 +1,11 @@
-package test;
+package org.example.test;
+
+import org.example.primitives.Double3;
+import org.example.primitives.Point;
+import org.example.primitives.*;
 
 import static java.lang.System.out;
-
-import static primitives.Util.isZero;
-
-import primitives.*;
+import static org.example.primitives.Util.isZero;
 
 /**
  * Test program for the 1st stage

@@ -1,7 +1,7 @@
-package geometries;
+package org.example.geometries;
 
-import primitives.Point;
-import primitives.Vector;
+import org.example.primitives.Point;
+import org.example.primitives.Vector;
 
 /**
  * Represents a sphere in three-dimensional space.

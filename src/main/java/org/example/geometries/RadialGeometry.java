@@ -1,4 +1,4 @@
-package geometries;
+package org.example.geometries;
 
 
 /**

@@ -1,6 +1,6 @@
-package geometries;
+package org.example.geometries;
 
-import primitives.Point;
+import org.example.primitives.Point;
 
 /**
  * Represents a triangle in three-dimensional space.

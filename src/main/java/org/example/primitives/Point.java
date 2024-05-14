@@ -1,6 +1,4 @@
-package primitives;
-
-import static primitives.Util.isZero;
+package org.example.primitives;
 
 /**
  * Represents a point in three-dimensional coordinate system.

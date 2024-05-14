@@ -1,4 +1,4 @@
-package primitives;
+package org.example.primitives;
 
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
