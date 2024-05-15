@@ -34,6 +34,14 @@ public class Tube extends RadialGeometry {
      */
     @Override
     public Vector getNormal(Point point) {
-        return null;
+        Vector pMinusHead = point.subtract(axis.getHead());
+        double t = axis.getDirection().dotProduct(pMinusHead);
+        /* Check if the point is "front" to the p0 the point in the base */
+        if (t == 0) {
+            return pMinusHead.normalize();
+        }
+        /* The point on the side calculate the normal */
+        Point center = axis.getHead().add(axis.getDirection().scale(t));
+        return point.subtract(center).normalize();
     }
 }
