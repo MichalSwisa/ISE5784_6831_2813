@@ -25,6 +25,20 @@ public class Ray {
     }
 
     /**
+     * getter for head
+     */
+    public Point getHead() {
+        return head;
+    }
+
+    /**
+     * getter for direction
+     */
+    public Vector getDirection() {
+        return direction;
+    }
+
+    /**
      * Checks whether this ray is equal to another object.
      *
      * @param obj The object to compare with.

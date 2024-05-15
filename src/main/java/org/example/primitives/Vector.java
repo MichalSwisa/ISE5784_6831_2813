@@ -108,6 +108,21 @@ public class Vector extends Point {
     }
 
     /**
+     * Checks if this vector and the given vector are both unit vectors and
+     * are either equal or opposites.
+     *
+     * @param vector the vector to compare with this vector
+     * @return {@code true} if both vectors are unit vectors and either equal or opposites;
+     *         {@code false} otherwise
+     */
+    public boolean isSameNormal(Vector vector) {
+        if (!(Util.isZero(length() - 1) && Util.isZero(vector.length() - 1))) {
+            return false;
+        }
+        return equals(vector) || equals(vector.scale(-1));
+    }
+
+    /**
      * Checks whether this vector is equal to another object.
      *
      * @param obj The object to compare with.
