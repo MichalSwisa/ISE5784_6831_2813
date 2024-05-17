@@ -26,7 +26,9 @@ public class Plane implements Geometry {
      * @param p3 The third point.
      */
     public Plane(Point p1, Point p2, Point p3) {
-        this.normal = null;
+        Vector v1 = p2.subtract(p1);
+        Vector v2 = p3.subtract(p1);
+        this.normal = v1.crossProduct(v2).normalize();
         this.q = p1;
     }
 
@@ -57,6 +59,7 @@ public class Plane implements Geometry {
      * @param point The point on the plane (ignored).
      * @return The normal vector to the plane.
      */
+    @Override
     public Vector getNormal(Point point) {
         return normal;
     }

@@ -1,6 +1,8 @@
 package org.example.geometries;
 
 import org.example.primitives.Point;
+import org.example.primitives.Vector;
+
 
 /**
  * Represents a triangle in three-dimensional space.
@@ -16,5 +18,10 @@ public class Triangle extends Polygon {
      */
     public Triangle(Point p1, Point p2, Point p3) {
         super(p1, p2, p3);
+    }
+
+    @Override
+    public Vector getNormal(Point point) {
+        return super.getNormal(point);
     }
 }

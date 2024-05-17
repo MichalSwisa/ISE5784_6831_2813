@@ -25,7 +25,9 @@ public class Vector extends Point {
      */
     public Vector(Double3 xyz) {
         super(xyz);
-        if (xyz.equals(Double3.ZERO)) throw new IllegalArgumentException("ZERO vector not allowed");
+        if (xyz.equals(Double3.ZERO)) {
+            throw new IllegalArgumentException("ZERO vector not allowed");
+        }
     }
 
     /**
@@ -55,15 +57,7 @@ public class Vector extends Point {
      * @return The dot product of this vector and the given vector.
      */
     public double dotProduct(Vector vector) {
-        double u1 = this.xyz.d1;
-        double u2 = this.xyz.d2;
-        double u3 = this.xyz.d3;
-
-        double v1 = vector.xyz.d1;
-        double v2 = vector.xyz.d2;
-        double v3 = vector.xyz.d3;
-
-        return (u1 * v1 + u2 * v2 + u3 * v3);
+        return xyz.product(vector.xyz).sum();
     }
 
     /**
@@ -86,7 +80,7 @@ public class Vector extends Point {
      * @return The squared length of this vector.
      */
     public double lengthSquared() {
-        return this.dotProduct(this);
+        return dotProduct(this);
     }
 
     /**
@@ -95,7 +89,7 @@ public class Vector extends Point {
      * @return The length of this vector.
      */
     public double length() {
-        return Math.sqrt(this.lengthSquared());
+        return Math.sqrt(lengthSquared());
     }
 
     /**
@@ -104,7 +98,7 @@ public class Vector extends Point {
      * @return The normalized vector.
      */
     public Vector normalize() {
-        return scale(1 / length());
+        return new Vector(xyz.reduce(length()));
     }
 
     /**
@@ -131,8 +125,7 @@ public class Vector extends Point {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        return (obj instanceof Vector other)
-                && super.equals(other); ///??????
+        return (obj instanceof Vector) && super.equals(obj);
     }
 
     /**

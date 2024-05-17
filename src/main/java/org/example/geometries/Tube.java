@@ -4,6 +4,8 @@ import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 
+import static org.example.primitives.Util.isZero;
+
 /**
  * Represents a tube in three-dimensional space.
  * Extends the RadialGeometry abstract class to inherit the radius attribute.
@@ -37,7 +39,7 @@ public class Tube extends RadialGeometry {
         Vector pMinusHead = point.subtract(axis.getHead());
         double t = axis.getDirection().dotProduct(pMinusHead);
         /* Check if the point is "front" to the p0 the point in the base */
-        if (t == 0) {
+        if (isZero(t)) {
             return pMinusHead.normalize();
         }
         /* The point on the side calculate the normal */
