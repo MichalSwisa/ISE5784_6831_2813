@@ -6,7 +6,7 @@ import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -33,6 +33,10 @@ public class TubeTest {
         /* TC02: edge situation normal vector to a point on the tube paralleled to p0. */
         assertTrue(exceptedVector.isSameNormal(tube.getNormal(point1)),
                 "ERROR: getNormal() doesn't work correctly when it's in the edge case.");
+
+    }
+    @Test
+    void testFindIntersections(){
 
     }
 }
