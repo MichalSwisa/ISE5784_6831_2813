@@ -69,5 +69,12 @@ class CylinderTest {
                 "ERROR: getNormal() point in the center on the top base " +
                         "doesn't work correctly.");
     }
+    /**
+     * Test method for {@link Cylinder#findIntersections(Ray)}.
+     */
+    @Test
+    void testFindIntersections(){
+
+    }
 
 }
