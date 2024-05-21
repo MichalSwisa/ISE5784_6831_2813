@@ -4,13 +4,15 @@ import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 
+import java.util.List;
+
 import static org.example.primitives.Util.isZero;
 
 /**
  * Represents a tube in three-dimensional space.
  * Extends the RadialGeometry abstract class to inherit the radius attribute.
  */
-public class Tube extends RadialGeometry {
+   public class Tube extends RadialGeometry {
     /**
      * The axis ray of the tube.
      */
@@ -45,5 +47,8 @@ public class Tube extends RadialGeometry {
         /* The point on the side calculate the normal */
         Point center = axis.getHead().add(axis.getDirection().scale(t));
         return point.subtract(center).normalize();
+    }
+    public List<Point> findIntersections(Ray ray){
+        return null;
     }
 }

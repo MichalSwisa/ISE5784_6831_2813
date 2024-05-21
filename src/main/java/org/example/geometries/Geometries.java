@@ -3,10 +3,9 @@ package org.example.geometries;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 
-
-
-import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 /**
  * Geometries class represents a collection of geometries in 3D Cartesian coordinate system
  */
@@ -25,5 +24,16 @@ public class Geometries implements Intersectable{
     }
 
     public List<Point> findIntersections(Ray ray) {
-    return null;}
+        List<Point> Intersection = null;
+        for (Intersectable geometry : Geometry) {
+            List<Point>  i = (geometry.findIntersections(ray));
+            if(i!=null){
+                if (Intersection==null){
+                    Intersection= new ArrayList<>();
+                }
+                Intersection.addAll(i);
+            }
+        }
+        return Intersection;
+    }
 }
