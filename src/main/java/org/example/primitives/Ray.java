@@ -1,5 +1,7 @@
 package org.example.primitives;
 
+import static org.example.primitives.Util.isZero;
+
 /**
  * Represents a ray in a three-dimensional space.
  */
@@ -61,7 +63,19 @@ public class Ray {
                 "head- " + head +
                 ", direction- " + direction;
     }
+    /**
+     *
+     * @param t
+     * @return the new point
+     */
+    public Point getPoint(double t){
+        if(isZero(t)){
+            return head;
+        }
+        return head.add(direction.scale(t));
+    }
 }
+
 
 
 
