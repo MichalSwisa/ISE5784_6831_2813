@@ -1,5 +1,6 @@
 package org.example.geometries;
 
+import org.example.geometries.Intersectable;
 import org.example.primitives.Point;
 import org.example.primitives.Vector;
 
@@ -7,7 +8,7 @@ import org.example.primitives.Vector;
  * Represents a geometric shape in three-dimensional space.
  * Defines a method for obtaining the normal vector to the surface at a given point.
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
     /**
      * Returns the normal vector to the surface of the geometry at the given point.
      *

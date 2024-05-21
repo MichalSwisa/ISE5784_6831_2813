@@ -5,7 +5,7 @@ import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 
 import static org.example.primitives.Util.isZero;
-
+import java.util.List;
 /**
  * Represents a cylinder in three-dimensional space, defined by its height, axis, and radius.
  */
@@ -60,4 +60,10 @@ public class Cylinder extends Tube {
         /* The point on the side, handle it like a tube. */
         return super.getNormal(point);
     }
+
+    @Override
+    public List<Point> findIntersections(Ray ray){
+        return null;
+    }
+
 }
