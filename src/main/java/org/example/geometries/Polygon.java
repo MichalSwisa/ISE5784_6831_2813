@@ -1,11 +1,11 @@
 package org.example.geometries;
 
 
-
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.primitives.Util.isZero;
@@ -94,7 +94,36 @@ public class Polygon implements Geometry {
     public Vector getNormal(Point point) {
         return plane.getNormal();
     }
-    public List<Point> findIntersections(Ray ray){
-        return null;
+
+    public List<Point> findIntersections(Ray ray) {
+        List<Point> intersections = plane.findIntersections(ray);
+        //if there are no intersections with the plane, there are no intersections with the polygon
+        if (intersections == null) {
+            return null;
+        }
+
+        Point checkPoint = intersections.get(0);
+        List<Vector> result = new ArrayList<>();
+        Point last = vertices.get(size - 1);
+        //we will use the method of ni=(pi-pi-1)x(pi-1-Pinter) to check if the point is inside the polygon
+        try {
+            for (Point p : vertices) {//we will add all of the vectors to the list
+                result.add(p.subtract(last).crossProduct(last.subtract(checkPoint)));
+                last = p;
+            }
+            Vector lastVec = result.getLast();
+            for (Vector v : result) {//we will check if the vectors are in the same direction
+                if (v.dotProduct(lastVec) <= 0) {
+                    return null;
+                }
+                lastVec = v;
+            }
+        }
+        //if the point is on the edge of the polygon
+        catch (IllegalArgumentException e) {
+            return null;
+        }
+        return intersections;
+
     }
 }

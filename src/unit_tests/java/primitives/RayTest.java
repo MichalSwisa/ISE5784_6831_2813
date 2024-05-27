@@ -1,5 +1,8 @@
-package org.example.primitives;
+package primitives;
 
+import org.example.primitives.Point;
+import org.example.primitives.Ray;
+import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

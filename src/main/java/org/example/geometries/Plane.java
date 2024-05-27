@@ -3,10 +3,12 @@ package org.example.geometries;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
+
 import java.util.List;
 
 import static org.example.primitives.Util.alignZero;
 import static org.example.primitives.Util.isZero;
+
 /**
  * Represents an infinite plane in three-dimensional space.
  * Implements the Geometry interface to provide a method for obtaining the normal vector to the plane at a given point.
@@ -47,25 +49,25 @@ public class Plane implements Geometry {
         this.normal = normal.normalize();
     }
 
-    public List<Point> findIntersections(Ray ray){
+    public List<Point> findIntersections(Ray ray) {
         //if the ray starts at the plane
-        if(ray.getHead().equals(q)){
+        if (ray.getHead().equals(q)) {
             return null;
         }
 
-        double t=alignZero(normal.dotProduct(ray.getDirection()));
+        double t = alignZero(normal.dotProduct(ray.getDirection()));
         //if the ray is parallel to the plane
-        if(isZero(t)){
+        if (isZero(t)) {
             return null;
         }
 
-        double t1=alignZero(normal.dotProduct(q.subtract(ray.getHead()))/t);
+        double t1 = alignZero(normal.dotProduct(q.subtract(ray.getHead())) / t);
         //if the ray is in the opposite direction of the normal
-        if(t1<=0){
+        if (isZero(t1) || t1 < 0) {
             return null;
         }
         //if the ray intersects the plane
-        return List.of(ray.getHead());//??????????/
+        return List.of(ray.getPoint(t1));//??????????/
     }
 
     /**

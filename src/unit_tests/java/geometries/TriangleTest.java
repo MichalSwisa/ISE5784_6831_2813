@@ -6,8 +6,9 @@ import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testing Triangle.
@@ -32,15 +33,16 @@ public class TriangleTest {
         assertTrue(normalizeVector.isSameNormal(resultNormal),
                 "ERROR: getNormal() doesn't work correctly.");
     }
+
     /**
      * Test method for {@link Triangle#findIntersections(Ray)}.
      */
     @Test
-    void testFindIntersections(){
+    void testFindIntersections() {
         Triangle triangle = new Triangle(new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 0, 1));
         // ============ Equivalence Partitions Tests ==============
         // TC01: Ray intersects the triangle (1 point)
-        assertEquals(List.of(new Point(1d/3, 1d/3, 1d/3)),
+        assertEquals(List.of(new Point(1d / 3, 1d / 3, 1d / 3)),
                 triangle.findIntersections(new Ray(new Point(0, 0, 0), new Vector(1, 1, 1))),
                 "Ray intersects the triangle"
         );

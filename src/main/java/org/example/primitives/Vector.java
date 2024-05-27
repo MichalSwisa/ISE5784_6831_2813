@@ -14,7 +14,9 @@ public class Vector extends Point {
      */
     public Vector(double x, double y, double z) {
         super(x, y, z);
-        if (x == 0 && y == 0 && z == 0) throw new IllegalArgumentException("ZERO vector not allowed");
+        if (x == 0 && y == 0 && z == 0){
+            throw new IllegalArgumentException("ZERO vector not allowed");
+        }
     }
 
     /**
@@ -57,7 +59,8 @@ public class Vector extends Point {
      * @return The dot product of this vector and the given vector.
      */
     public double dotProduct(Vector vector) {
-        return xyz.product(vector.xyz).sum();
+        return xyz.d1 * vector.xyz.d1 + xyz.d2 * vector.xyz.d2 + xyz.d3 * vector.xyz.d3;
+        //return xyz.product(vector.xyz).sum();
     }
 
     /**
@@ -98,7 +101,8 @@ public class Vector extends Point {
      * @return The normalized vector.
      */
     public Vector normalize() {
-        return new Vector(xyz.reduce(length()));
+        return scale(1 / length());
+        //return new Vector(xyz.reduce(length()));
     }
 
     /**

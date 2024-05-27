@@ -7,6 +7,7 @@ import org.example.primitives.Vector;
 import java.util.List;
 
 import static org.example.primitives.Util.isZero;
+import static org.example.primitives.Util.alignZero;
 
 /**
  * Represents a tube in three-dimensional space.
@@ -49,6 +50,6 @@ import static org.example.primitives.Util.isZero;
         return point.subtract(center).normalize();
     }
     public List<Point> findIntersections(Ray ray){
-        return null;
+       return null;
     }
 }

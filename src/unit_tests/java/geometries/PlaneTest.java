@@ -72,7 +72,7 @@ public class PlaneTest {
 
         //TC01 start not in the plane and Intsersect the plane
         result = p.findIntersections(new Ray(new Point(0, 1, 1), new Vector(1, 0, 1)));
-        assertEquals(result, List.of(new Point(0.5, 1, 1.5)), "Error start not in the plane and Intsersect the plane");
+         assertEquals(result, List.of(new Point(0.5, 1, 1.5)), "Error start not in the plane and Intsersect the plane");
 
         //TC02 start not in the plane and not Intsersect the plane
         result = p.findIntersections(new Ray(new Point(0, 1, 1), new Vector(0, -1, 1)));

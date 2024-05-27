@@ -33,6 +33,10 @@ public class Ray {
         return head;
     }
 
+    public Point getHead(double t) {
+        return head.add(direction.scale(t));
+    }
+
     /**
      * getter for direction
      */
@@ -63,13 +67,13 @@ public class Ray {
                 "head- " + head +
                 ", direction- " + direction;
     }
+
     /**
-     *
      * @param t
      * @return the new point
      */
-    public Point getPoint(double t){
-        if(isZero(t)){
+    public Point getPoint(double t) {
+        if (isZero(t)) {
             return head;
         }
         return head.add(direction.scale(t));
