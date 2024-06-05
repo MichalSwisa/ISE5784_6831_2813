@@ -1,9 +1,11 @@
 package org.example.renderer;
 
+import org.example.geometries.Sphere;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 public class Camera implements Cloneable {
@@ -104,6 +106,9 @@ public class Camera implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException("Cloning of Camera failed", e);
         }
+    }
+
+    /* public List<Point> findIntersections(int i, int i1, Sphere sphereTC01) {
     }
 
     /**
