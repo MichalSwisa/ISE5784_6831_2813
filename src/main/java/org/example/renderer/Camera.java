@@ -4,7 +4,7 @@ import org.example.geometries.Sphere;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
-
+import org.example.primitives.Color;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -19,6 +19,8 @@ public class Camera implements Cloneable {
     private double viewPlaneWidth = 0.0;
     private double viewPlaneHeight = 0.0;
     private double viewPlaneDistance = 0.0;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTrace;
 
     /**
      * Private default constructor for Camera.
@@ -70,35 +72,6 @@ public class Camera implements Cloneable {
         return new Ray(position, vIJ);
     }
 
-    public Point getPosition() {
-        return position;
-    }
-
-    public Vector getVTo() {
-        return vTo;
-    }
-
-    public Vector getVUp() {
-        return vUp;
-    }
-
-    public Vector getVRight() {
-        return vRight;
-    }
-
-    public double getViewPlaneWidth() {
-        return viewPlaneWidth;
-    }
-
-    public double getViewPlaneHeight() {
-        return viewPlaneHeight;
-    }
-
-    public double getViewPlaneDistance() {
-        return viewPlaneDistance;
-    }
-
-
     @Override
     public Camera clone() {
         try {
@@ -108,7 +81,71 @@ public class Camera implements Cloneable {
         }
     }
 
-    /* public List<Point> findIntersections(int i, int i1, Sphere sphereTC01) {
+    //public List<Point> findIntersections(int i, int i1, Sphere sphereTC01) {}
+    /**
+     * Calculates a color for a specific pixel in an image.
+     *
+     * @param nX The number of pixels in a row in the view plane.
+     * @param nY The number of pixels in a column in the view plane.
+     * @param j  The row number of the pixel.
+     * @param i  The column number of the pixel.
+     */
+    private void castRay(int nX, int nY, int j, int i) {
+        this.imageWriter.writePixel(j, i, this.rayTrace.traceRay(this.constructRay(nX, nY, j, i)));
+    }
+
+
+    /**
+     * Renders the image by casting rays from the camera through each pixel of the image and writing the resulting color to the imageWriter.
+     * Throws UnsupportedOperationException if any of the required resources are missing (rayTracerBase, imageWriter, width, height, distance).
+     */
+    public Camera renderImage() {
+        if (this.rayTrace == null || this.imageWriter == null || this.viewPlaneWidth == 0 || this.viewPlaneHeight == 0 || this.viewPlaneDistance == 0)
+            throw new UnsupportedOperationException("MissingResourcesException");
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        for (int i = 0; i < nY; i++)
+            for (int j = 0; j < nX; j++)
+                this.castRay(nX, nY, j, i);
+        return this;
+    }
+
+
+
+    /**
+     * Draws a grid on the image by writing a specified color to the pixels that fall on the grid lines.
+     * Throws UnsupportedOperationException if imageWriter object is null.
+     *
+     * @param interval The spacing between grid lines.
+     * @param color    The color to use for the grid lines.
+     */
+    public Camera printGrid(int interval, Color color) throws MissingResourceException, IllegalArgumentException {
+        if (this.imageWriter == null)
+            throw new MissingResourceException("The render's field imageWriter mustn't be null", "ImageWriter", null);
+
+        if (this.imageWriter.getNx() % interval != 0 || this.imageWriter.getNy() % interval != 0)
+            throw new IllegalArgumentException("The grid is supposed to have squares, therefore the given interval must be a divisor of both Nx and Ny");
+
+        for (int i = 0; i < this.imageWriter.getNx(); i++)
+            for (int j = 0; j < this.imageWriter.getNy(); j++)
+                if (i % interval == 0 || (i + 1) % interval == 0 || j % interval == 0 || (j + 1) % interval == 0)
+                    this.imageWriter.writePixel(i, j, color);
+        return this;
+    }
+
+
+
+
+    /**
+     * "Printing" the image - producing an unoptimized png file of the image
+     * @throws MissingResourceException The render's field imageWriter mustn't be null
+     **/
+    public Camera writeToImage() throws MissingResourceException {
+        if (this.imageWriter == null)
+            throw new MissingResourceException("The render's field imageWriter mustn't be null", "ImageWriter", null);
+        this.imageWriter.writeToImage();
+        return this;
     }
 
     /**
@@ -200,39 +237,29 @@ public class Camera implements Cloneable {
             this.camera.viewPlaneDistance = distance;
             return this;
         }
-
         public Builder setPosition(Point position) {
             this.camera.position = position;
             return this;
         }
-
-        public Builder setVTo(Vector vTo) {
-            this.camera.vTo = vTo;
+        /**
+         * setter for image writer.
+         *
+         * @param imageWriter image writer.
+         * @return the Camera.
+         */
+        public Builder setImageWriter(ImageWriter imageWriter) {
+            camera.imageWriter= imageWriter;
             return this;
         }
 
-        public Builder setVUp(Vector vUp) {
-            this.camera.vUp = vUp;
-            return this;
-        }
-
-        public Builder setVRight(Vector vRight) {
-            this.camera.vRight = vRight;
-            return this;
-        }
-
-        public Builder setViewPlaneWidth(double viewPlaneWidth) {
-            this.camera.viewPlaneWidth = viewPlaneWidth;
-            return this;
-        }
-
-        public Builder setViewPlaneHeight(double viewPlaneHeight) {
-            this.camera.viewPlaneHeight = viewPlaneHeight;
-            return this;
-        }
-
-        public Builder setViewPlaneDistance(double viewPlaneDistance) {
-            this.camera.viewPlaneDistance = viewPlaneDistance;
+        /**
+         * Setter for ray tracer base.
+         *
+         * @param rayTracerBase Ray tracer base.
+         * @return The Camera.
+         */
+        public Builder setRayTracer(RayTracerBase rayTracerBase) {
+            camera.rayTrace = rayTracerBase;
             return this;
         }
 
