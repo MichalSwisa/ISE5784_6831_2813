@@ -5,8 +5,7 @@ import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +14,7 @@ class RayTest {
 
     @Test
     void testGetPoint(){
-        Ray ray = new Ray(new Point(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)),
+         final Ray ray = new Ray(new Point(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)),
                 new Vector(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)));
 
         // ============ Equivalence Partitions Tests ==============
@@ -34,7 +33,7 @@ class RayTest {
     @Test
     void testFindClosestPoint(){
 
-        Ray ray = new Ray(new Point(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)),
+        final Ray ray = new Ray(new Point(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)),
                 new Vector(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)));
 
         // ============ Equivalence Partitions Tests ==============

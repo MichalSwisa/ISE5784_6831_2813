@@ -12,7 +12,7 @@ public class AmbientLight {
     /**
      * A static final instance representing no ambient light (intensity is black, attenuation is zero).
      */
-    public static final AmbientLight NONE = new AmbientLight(Color.BLACK, 0.0);
+    public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
 
     private final Color intensity;
 

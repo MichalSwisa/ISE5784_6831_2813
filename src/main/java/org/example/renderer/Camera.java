@@ -1,11 +1,9 @@
 package org.example.renderer;
 
-import org.example.geometries.Sphere;
-import org.example.primitives.Point;
-import org.example.primitives.Ray;
-import org.example.primitives.Vector;
-import org.example.primitives.Color;
-import java.util.List;
+
+import org.example.primitives.*;
+
+
 import java.util.MissingResourceException;
 
 public class Camera implements Cloneable {
@@ -133,9 +131,6 @@ public class Camera implements Cloneable {
                     this.imageWriter.writePixel(i, j, color);
         return this;
     }
-
-
-
 
     /**
      * "Printing" the image - producing an unoptimized png file of the image
