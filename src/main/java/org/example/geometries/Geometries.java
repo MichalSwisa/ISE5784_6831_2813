@@ -2,6 +2,7 @@ package org.example.geometries;
 
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
+import java.util.stream.Collectors;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Geometries class represents a collection of geometries in 3D Cartesian coordinate system
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     private final List<Intersectable> Geometry = new LinkedList<>();
 
     /**
@@ -58,4 +59,17 @@ public class Geometries implements Intersectable {
         }
         return totalIntersections;
     }
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> geoIntersections = new ArrayList<>();
+        for (Intersectable intersectable : Geometry) {
+            List<GeoPoint> intersections = intersectable.findGeoIntersections(ray);
+            if (intersections != null) {
+                geoIntersections.addAll(intersections);
+            }
+        }
+        return geoIntersections.isEmpty() ? null : geoIntersections;
+    }
+
 }

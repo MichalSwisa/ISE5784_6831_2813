@@ -2,7 +2,11 @@ package org.example.scene;
 
 import org.example.geometries.Geometries;
 import org.example.lighting.AmbientLight;
+import org.example.lighting.LightSource;
 import org.example.primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The Scene class represents a 3D scene containing geometries, background color,
@@ -26,6 +30,10 @@ public class Scene {
      */
     public Geometries geometries;
 
+    /**
+     * list of all light source in the scene
+     */
+    public List<LightSource> lights = new LinkedList<>();
 
     /**
      * Constructs a new Scene with the specified name.
@@ -71,5 +79,22 @@ public class Scene {
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
         return this;
+    }
+
+    /**
+     * setter for light source return this for builder
+     *
+     * @param lights list of source lights
+     * @return this for builder
+     */
+    public Scene setlights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Scene [name=" + name + ", background=" + background + ", ambientLight=" + ambientLight + ", geometries="
+                + geometries + ", lightSources=" + lights + "]";
     }
 }

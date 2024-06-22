@@ -8,32 +8,34 @@ import org.example.primitives.Double3;
  * It contains the intensity of the ambient light, which is calculated
  * based on the original intensity and an attenuation coefficient.
  */
-public class AmbientLight {
+public class AmbientLight extends Light {
     /**
      * A static final instance representing no ambient light (intensity is black, attenuation is zero).
      */
     public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
 
-    private final Color intensity;
+  //  private final Color intensity;
 
+    // ******************* constructors *****************
     /**
-     * Constructs an AmbientLight with specified intensity and attenuation coefficient.
+     * constructor calculate the intensity (Double3 object) use super constructor
      *
-     * @param IA the original intensity (color) of the ambient light
-     * @param kA the attenuation coefficient as a Double3 object
+     * @param light light intensity according to the RGB component
+     * @param ka    attenuation coefficient of the light on the surface
      */
-    public AmbientLight(Color IA, Double3 kA) {
-        this.intensity = IA.scale(kA);
+    public AmbientLight(Color light, Double3 ka) {
+        super(light.scale(ka));
     }
 
     /**
-     * Constructs an AmbientLight with specified intensity and attenuation coefficient.
+     * constructor calculate the intensity (java.double object) use super
+     * constructor
      *
-     * @param IA the original intensity (color) of the ambient light
-     * @param kA the attenuation coefficient as a double
+     * @param light light intensity according to the RGB component
+     * @param ka    attenuation coefficient of the light on the surface
      */
-    public AmbientLight(Color IA, double kA) {
-        this.intensity = IA.scale(kA);
+    public AmbientLight(Color light, double ka) {
+        super(light.scale(ka));
     }
 
     /**
@@ -41,7 +43,8 @@ public class AmbientLight {
      *
      * @return the intensity of the ambient light
      */
-    public Color getIntensity() {
-        return intensity;
-    }
+   // public Color getIntensity() {
+     //   return intensity;
+    //}
 }
+

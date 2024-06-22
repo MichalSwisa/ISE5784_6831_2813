@@ -1,6 +1,7 @@
 package org.example.primitives;
 
 import java.util.List;
+import org.example.geometries.Intersectable.GeoPoint;
 
 import static org.example.primitives.Util.isZero;
 
@@ -80,30 +81,46 @@ public class Ray {
         }
         return head.add(direction.scale(t));
     }
+
     /**
-     * Finds the closest point to the head of the ray from a given list of points.
+     * Finds the closest point to the ray's origin from a list of points.
      *
-     * @param points A list of points to search from.
-     * @return The point closest to the head of the ray, or null if the list is empty or null.
+     * @param points the list of points.
+     * @return the closest point to the ray's origin, or null if the list is empty.
      */
-    public Point findClosestPoint(List<Point> points) {
-        if (points == null || points.isEmpty()) {
+    public Point findClosestPoint(List<Point> points)
+    {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
+
+    /**
+     * this function get list of geoPoints and return the closest geoPoint to p0 of
+     * the ray
+     *
+     * @param geoPoints list of GeoPoints for search
+     * @return closestPoint closest GeoPoint to p0
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints)
+    {
+        if (geoPoints.isEmpty() || geoPoints == null)
             return null;
-        }
 
-        Point closestPoint = points.get(0);
-        double minDistance = head.distance(closestPoint);
+        double minDistance = Double.POSITIVE_INFINITY;
+        GeoPoint closestPoint = null;
 
-        for (Point point : points) {
-            double distance = head.distance(point);
-            if (distance < minDistance) {
+        for (var p : geoPoints)
+        {
+            double distance = p.point.distanceSquared(head);
+            if (distance < minDistance)
+            {
                 minDistance = distance;
-                closestPoint = point;
+                closestPoint = p;
             }
         }
-
         return closestPoint;
     }
+
 }
 
 

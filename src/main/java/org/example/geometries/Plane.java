@@ -1,4 +1,5 @@
 package org.example.geometries;
+import java.util.stream.Collectors;
 
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
@@ -13,7 +14,7 @@ import static org.example.primitives.Util.isZero;
  * Represents an infinite plane in three-dimensional space.
  * Implements the Geometry interface to provide a method for obtaining the normal vector to the plane at a given point.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /**
      * A point on the plane.
      */
@@ -49,11 +50,17 @@ public class Plane implements Geometry {
         this.normal = normal.normalize();
     }
 
+    @Override
     public List<Point> findIntersections(Ray ray) {
         //if the ray starts at the plane
         if (ray.getHead().equals(q)) {
             return null;
         }
+
+
+
+
+
 
         double t = alignZero(normal.dotProduct(ray.getDirection()));
         //if the ray is parallel to the plane
@@ -69,6 +76,8 @@ public class Plane implements Geometry {
         //if the ray intersects the plane
         return List.of(ray.getPoint(t1));//??????????/
     }
+
+
 
     /**
      * Returns the normal vector to the plane.
@@ -90,5 +99,18 @@ public class Plane implements Geometry {
     public Vector getNormal(Point point) {
         return normal;
 
+    }
+
+
+
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        return intersections.stream()
+                .map(point -> new GeoPoint(this, point))
+                .collect(Collectors.toList());
     }
 }

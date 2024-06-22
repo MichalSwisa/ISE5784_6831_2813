@@ -3,6 +3,7 @@ package org.example.geometries;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -67,5 +68,17 @@ public class Sphere extends RadialGeometry {
             return List.of(ray.getPoint(t2));
         }
         return null;
+    }
+
+
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        return intersections.stream()
+                .map(point -> new GeoPoint(this, point))
+                .collect(Collectors.toList());
     }
 }

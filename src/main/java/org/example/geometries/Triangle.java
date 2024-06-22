@@ -3,6 +3,7 @@ package org.example.geometries;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -56,5 +57,39 @@ public class Triangle extends Polygon {
         }
         //if the ray intersects the plane but not the triangle
         return null;
+    }
+
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = super.findIntersections(ray); // מתודת מישור קיימת
+        if (intersections == null) {
+            return null;
+        }
+        return intersections.stream()
+                .filter(this::isInside) // שיטה שבודקת אם הנקודה בתוך המשולש
+                .map(point -> new GeoPoint(this, point))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if a point is inside the triangle.
+     *
+     * @param point The point to check.
+     * @return true if the point is inside the triangle, false otherwise.
+     */
+    private boolean isInside(Point point) {
+        Vector v1 = vertices.get(0).subtract(point);
+        Vector v2 = vertices.get(1).subtract(point);
+        Vector v3 = vertices.get(2).subtract(point);
+
+        Vector n1 = v1.crossProduct(v2).normalize();
+        Vector n2 = v2.crossProduct(v3).normalize();
+        Vector n3 = v3.crossProduct(v1).normalize();
+
+        double dot12 = n1.dotProduct(n2);
+        double dot23 = n2.dotProduct(n3);
+        double dot31 = n3.dotProduct(n1);
+
+        return (dot12 > 0) && (dot23 > 0) && (dot31 > 0);
     }
 }
