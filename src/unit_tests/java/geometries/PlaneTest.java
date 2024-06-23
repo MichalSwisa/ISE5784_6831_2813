@@ -1,13 +1,15 @@
 package geometries;
 
+
 import org.example.geometries.Plane;
 import org.example.primitives.Point;
-import org.example.primitives.Vector;
 import org.example.primitives.Ray;
+import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testing Plane.
@@ -65,14 +67,14 @@ public class PlaneTest {
      * Test method for {@link Plane#findIntersections(Ray)}.
      */
     @Test
-    void testFindIntersections(){
-        Plane p =new Plane(new Point(1, 1, 1),new Vector(1,1,1));
+    void testFindIntersections() {
+        Plane p = new Plane(new Point(1, 1, 1), new Vector(1, 1, 1));
         List<Point> result;
         // ============ Equivalence Partitions Tests ==============
 
         //TC01 start not in the plane and Intsersect the plane
         result = p.findIntersections(new Ray(new Point(0, 1, 1), new Vector(1, 0, 1)));
-         assertEquals(result, List.of(new Point(0.5, 1, 1.5)), "Error start not in the plane and Intsersect the plane");
+        assertEquals(result, List.of(new Point(0.5, 1, 1.5)), "Error start not in the plane and Intsersect the plane");
 
         //TC02 start not in the plane and not Intsersect the plane
         result = p.findIntersections(new Ray(new Point(0, 1, 1), new Vector(0, -1, 1)));

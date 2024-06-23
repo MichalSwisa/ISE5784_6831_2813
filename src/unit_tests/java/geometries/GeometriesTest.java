@@ -1,5 +1,6 @@
 package geometries;
 
+
 import org.example.geometries.*;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;

@@ -1,5 +1,6 @@
 package primitives;
 
+
 import org.example.primitives.Double3;
 import org.example.primitives.Point;
 import org.example.primitives.Vector;
@@ -20,8 +21,7 @@ class VectorTest {
         /* =============== Boundary Values Tests ================== */
 
         /* TC01: Check if the zero vector result handle correctly */
-        assertThrows(IllegalArgumentException.class, () -> new Vector(new Double3(0, 0, 0)),
-                "ERROR: zero vector doesn't throw exception");
+        assertThrows(IllegalArgumentException.class, () -> new Vector(new Double3(0, 0, 0)), "ERROR: zero vector doesn't throw exception");
     }
 
     /**
@@ -37,14 +37,12 @@ class VectorTest {
         /* ============ Equivalence Partitions Tests ============== */
 
         /* TC01: Add valid point to valid vector. */
-        assertEquals(new Vector(3, 6, 10), point1.add(point3),
-                "ERROR: Vector + Vector does not work correctly");
+        assertEquals(new Vector(3, 6, 10), point1.add(point3), "ERROR: Vector + Vector does not work correctly");
 
         /* =============== Boundary Values Tests ================== */
 
         /* TC02: Check if the zero vector result handle correctly */
-        assertThrows(IllegalArgumentException.class, () -> point1.add(point2),
-                "ERROR: Vector + Vector doesn't work correctly in zero vector");
+        assertThrows(IllegalArgumentException.class, () -> point1.add(point2), "ERROR: Vector + Vector doesn't work correctly in zero vector");
     }
 
     /**
@@ -58,14 +56,12 @@ class VectorTest {
         /* ============ Equivalence Partitions Tests ============== */
 
         /* TC01: Check correct values. */
-        assertEquals(new Vector(3.2, 6.4, 9.6), point1.scale(3.2),
-                "ERROR: Vector * scalar does not work correctly");
+        assertEquals(new Vector(3.2, 6.4, 9.6), point1.scale(3.2), "ERROR: Vector * scalar does not work correctly");
 
         /* =============== Boundary Values Tests ================== */
 
         /* TC02: Check if the zero vector result handle correctly */
-        assertThrows(IllegalArgumentException.class, () -> point1.scale(0),
-                "ERROR: Vector * scalar doesn't work correctly in zero vector");
+        assertThrows(IllegalArgumentException.class, () -> point1.scale(0), "ERROR: Vector * scalar doesn't work correctly in zero vector");
     }
 
 
@@ -86,40 +82,33 @@ class VectorTest {
         /* ============ Equivalence Partitions Tests ============== */
 
         /* TC01: Check correct values. */
-        assertTrue(isZero(vector1.dotProduct(vector4) - 16),
-                "ERROR: dotProduct() failed with valid vectors wrong value");
+        assertTrue(isZero(vector1.dotProduct(vector4) - 16), "ERROR: dotProduct() failed with valid vectors wrong value");
 
         /* =============== Boundary Values Tests ================== */
 
         /* TC02: parallel vectors. */
-        assertTrue(isZero(vector1.dotProduct(vector2) + 28),
-                "ERROR: dotProduct() failed with parallel vectors wrong value");
+        assertTrue(isZero(vector1.dotProduct(vector2) + 28), "ERROR: dotProduct() failed with parallel vectors wrong value");
 
         /* TC03: vectors with same direction. */
         Vector u = vector1.normalize();
-        assertFalse(vector1.dotProduct(u) < 0,
-                "ERROR: the normalized vector is opposite to the original one");
+        assertFalse(vector1.dotProduct(u) < 0, "ERROR: the normalized vector is opposite to the original one");
 
 
         /* TC04: vectors with reverse directions. */
         Vector va1 = pointA.subtract(pointB);
         Vector va2 = pointB.subtract(pointA);
-        assertTrue(isZero(va1.dotProduct(va2) + 206),
-                "ERROR: dotProduct() reverse direction vectors wrong value");
+        assertTrue(isZero(va1.dotProduct(va2) + 206), "ERROR: dotProduct() reverse direction vectors wrong value");
 
 
         /* TC05: vectors with obtuse angle between them. */
-        assertTrue(isZero(vector3.dotProduct(new Vector(1, 1, 3)) + 3),
-                "ERROR: dotProduct() obtuse angle between vectors wrong value");
+        assertTrue(isZero(vector3.dotProduct(new Vector(1, 1, 3)) + 3), "ERROR: dotProduct() obtuse angle between vectors wrong value");
 
 
         /* TC06: Orthogonal vectors. */
-        assertTrue(isZero(vector1.dotProduct(vector3)),
-                "ERROR: dotProduct() for orthogonal vectors is not zero");
+        assertTrue(isZero(vector1.dotProduct(vector3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
 
         /* TC07: vectors with sharp angle between them. */
-        assertTrue(isZero(vector3.dotProduct(new Vector(1, 2, -6)) - 18),
-                "ERROR: dotProduct() wrong value");
+        assertTrue(isZero(vector3.dotProduct(new Vector(1, 2, -6)) - 18), "ERROR: dotProduct() wrong value");
     }
 
 
@@ -142,42 +131,34 @@ class VectorTest {
 
         /* TC01: dot product with sharp angle between vectors. */
 
-        assertTrue(isZero(vr.length() - vector1.length() * vector3.length()),
-                "ERROR: crossProduct() wrong result length");
+        assertTrue(isZero(vr.length() - vector1.length() * vector3.length()), "ERROR: crossProduct() wrong result length");
 
-        assertTrue(isZero(vr.dotProduct(vector1)) && isZero(vr.dotProduct(vector3)),
-                "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertTrue(isZero(vr.dotProduct(vector1)) && isZero(vr.dotProduct(vector3)), "ERROR: crossProduct() result is not orthogonal to its operands");
 
         /* =============== Boundary Values Tests ================== */
 
         /* TC02: vectors with reverse directions. */
         Vector va1 = a.subtract(b);
         Vector va2 = b.subtract(a);
-        assertThrows(IllegalArgumentException.class, () -> va1.crossProduct(va2),
-                "ERROR: the normalized vector is not parallel to the original one");
+        assertThrows(IllegalArgumentException.class, () -> va1.crossProduct(va2), "ERROR: the normalized vector is not parallel to the original one");
 
 
         /* TC03: orthogonal vectors. */
-        assertEquals(new Vector(-13, 2, 3), vector1.crossProduct(vector3),
-                "ERROR: crossProduct() wrong value");
+        assertEquals(new Vector(-13, 2, 3), vector1.crossProduct(vector3), "ERROR: crossProduct() wrong value");
 
 
         /* TC04: vectors with obtuse angle between them. */
-        assertEquals(new Vector(11, -2, -3), vector3.crossProduct(new Vector(1, 1, 3)),
-                "ERROR: crossProduct() wrong value");
+        assertEquals(new Vector(11, -2, -3), vector3.crossProduct(new Vector(1, 1, 3)), "ERROR: crossProduct() wrong value");
 
         /* TC05: vectors with sharp angle between them. */
-        assertEquals(new Vector(-14, -2, -3), vector3.crossProduct(new Vector(1, 2, -6)),
-                "ERROR: crossProduct() wrong value");
+        assertEquals(new Vector(-14, -2, -3), vector3.crossProduct(new Vector(1, 2, -6)), "ERROR: crossProduct() wrong value");
 
         /* TC06: vectors with same direction. */
-        assertThrows(IllegalArgumentException.class, () -> vector1.crossProduct(nVector),
-                "ERROR: the normalized vector is not parallel to the original one");
+        assertThrows(IllegalArgumentException.class, () -> vector1.crossProduct(nVector), "ERROR: the normalized vector is not parallel to the original one");
 
 
         /* TC07: parallel vectors. */
-        assertThrows(IllegalArgumentException.class, () -> vector1.crossProduct(vector2),
-                "ERROR: crossProduct() for parallel vectors does not throw an exception");
+        assertThrows(IllegalArgumentException.class, () -> vector1.crossProduct(vector2), "ERROR: crossProduct() for parallel vectors does not throw an exception");
     }
 
     /**

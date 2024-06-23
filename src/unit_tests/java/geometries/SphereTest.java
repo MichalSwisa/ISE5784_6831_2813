@@ -1,5 +1,6 @@
 package geometries;
 
+
 import org.example.geometries.Sphere;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Testing Sphere.
  */
-public class SphereTest {
+public class SphereTest  {
     /**
      * Test method for {@link Sphere#getNormal(Point)}.
      */

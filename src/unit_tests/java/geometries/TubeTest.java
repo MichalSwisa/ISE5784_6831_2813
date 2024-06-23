@@ -1,12 +1,13 @@
 package geometries;
 
+
 import org.example.geometries.Tube;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -35,8 +36,9 @@ public class TubeTest {
                 "ERROR: getNormal() doesn't work correctly when it's in the edge case.");
 
     }
+
     @Test
-    void testFindIntersections(){
+    void testFindIntersections() {
 
     }
 }

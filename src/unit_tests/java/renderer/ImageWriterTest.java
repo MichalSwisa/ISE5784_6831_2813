@@ -1,8 +1,9 @@
 package renderer;
 
-import org.junit.jupiter.api.Test;
-import org.example.renderer.ImageWriter;
+
 import org.example.primitives.Color;
+import org.example.renderer.ImageWriter;
+import org.junit.jupiter.api.Test;
 
 
 public class ImageWriterTest {

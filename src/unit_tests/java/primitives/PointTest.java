@@ -1,5 +1,6 @@
 package primitives;
 
+
 import org.example.primitives.Point;
 import org.example.primitives.Util;
 import org.example.primitives.Vector;
@@ -14,7 +15,7 @@ public class PointTest {
     /**
      * Test method for {@link Point#add(Vector)}.
      */
-   // @Test
+    // @Test
     @org.junit.jupiter.api.Test
     public void testAdd() {
         Point point = new Point(1, 2, 3);

@@ -1,5 +1,6 @@
 package geometries;
 
+
 import org.example.geometries.Polygon;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
@@ -12,7 +13,7 @@ import java.util.List;
  * Testing Polygons
  * @author Dan
  */
-public class PolygonTests {
+public class PolygonTests  {
     /**
      * Delta value for accuracy when comparing the numbers of type 'double' in
      * assertEquals
