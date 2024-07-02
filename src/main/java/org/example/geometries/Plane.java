@@ -78,7 +78,44 @@ public class Plane extends Geometry {
     }
 
 
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
 
+        /* t=n*(q0-Po)/n*dir */
+        Vector dir = ray.getDirection();
+        Point p0 = ray.getHead();
+
+        /* Ray on the plane */
+        if (q.equals(p0)) {
+            return null;
+        }
+
+        double nqp = normal.dotProduct(q.subtract(p0));
+        /* Ray on the plane */
+        if (isZero(nqp)) {
+            return null;
+        }
+
+        double nv = normal.dotProduct(dir);
+        if (isZero(nv)) {
+            return null;
+        }
+
+        double t = nqp / nv;
+        /* Ray after the plane */
+        if (t < 0) {
+            return null;
+        }
+
+        p0 = ray.getHead(t);
+        /* Ray crosses the plane */
+        if (p0 != null) {
+            if (p0.distance(ray.getHead()) <= maxDistance) {
+                return List.of(new GeoPoint(this, p0));
+            }
+        }
+        return null;
+    }
     /**
      * Returns the normal vector to the plane.
      *
@@ -103,14 +140,14 @@ public class Plane extends Geometry {
 
 
 
-    @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<Point> intersections = findIntersections(ray);
-        if (intersections == null) {
-            return null;
-        }
-        return intersections.stream()
-                .map(point -> new GeoPoint(this, point))
-                .collect(Collectors.toList());
-    }
+    //@Override
+    //protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    //    List<Point> intersections = findIntersections(ray);
+    //    if (intersections == null) {
+    //        return null;
+    //    }
+    //    return intersections.stream()
+    //            .map(point -> new GeoPoint(this, point))
+    //            .collect(Collectors.toList());
+    //}
 }

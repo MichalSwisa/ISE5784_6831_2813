@@ -18,6 +18,8 @@ public class Ray {
      */
     private final Vector direction;
 
+    private static final double DELTA = 0.00001;
+
     /**
      * Constructs a ray with a given starting point and direction.
      *
@@ -28,7 +30,17 @@ public class Ray {
         this.head = head;
         this.direction = direction.normalize();
     }
-
+    /**
+     * constructor for Ray class with normal to the direction
+     * @param head the head of the ray
+     * @param direction the direction of the ray
+     * @param normal the normal to the direction
+     */
+    public Ray(Point head, Vector direction, Vector normal) {
+        Vector delta = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : -DELTA);
+        this.head = head.add(delta);
+        this.direction = direction.normalize();
+    }
     /**
      * getter for head
      */
@@ -103,7 +115,7 @@ public class Ray {
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints)
     {
-        if (geoPoints.isEmpty() || geoPoints == null)
+        if ( geoPoints == null || geoPoints.isEmpty() )
             return null;
 
         double minDistance = Double.POSITIVE_INFINITY;

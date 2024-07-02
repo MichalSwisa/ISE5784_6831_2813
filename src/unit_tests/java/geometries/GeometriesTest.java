@@ -29,8 +29,8 @@ class GeometriesTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: some of the geometries intersect with the ray
-        assertEquals(3, geometries.findIntersections(new Ray(new Point(0, 0, 0),
-                new Vector(1, 1, 1))).size(), "more then one intsersections");
+        assertEquals(6, geometries.findIntersections(new Ray(new Point(0, 0, 0),
+                new Vector(1, 1, 1))).size(), "more then one intersection");
 
         // =============== Boundary Values Tests ==================
         // TC02: no geometry intersect with the ray
@@ -39,11 +39,11 @@ class GeometriesTest {
 
         // TC03: only one geometry intersect with the ray
         assertEquals(1, geometries.findIntersections(new Ray(new Point(0, 0, 0),
-                new Vector(0, 0, 1))).size(), "one intsersections");
+                new Vector(0, 0, 1))).size(), "one intersection");
 
         // TC04: all geometries intersect with the ray
-        assertEquals(4, geometries.findIntersections(new Ray(new Point(-2, -2, -2),
-                new Vector(1, 1, 1))).size(), "all intsersections");
+        assertEquals(8, geometries.findIntersections(new Ray(new Point(-2, -2, -2),
+                new Vector(1, 1, 1))).size(), "all intersection");
 
         // TC05: empty list
         assertNull(geometries.findIntersections(new Ray(new Point(10, 10, 10),

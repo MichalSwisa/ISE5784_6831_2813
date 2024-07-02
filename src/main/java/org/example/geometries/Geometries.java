@@ -1,5 +1,6 @@
 package org.example.geometries;
 
+import org.example.geometries.Intersectable;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import java.util.stream.Collectors;
@@ -60,16 +61,27 @@ public class Geometries extends Intersectable {
         return totalIntersections;
     }
 
-    @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> geoIntersections = new ArrayList<>();
-        for (Intersectable intersectable : Geometry) {
-            List<GeoPoint> intersections = intersectable.findGeoIntersections(ray);
-            if (intersections != null) {
-                geoIntersections.addAll(intersections);
-            }
-        }
-        return geoIntersections.isEmpty() ? null : geoIntersections;
-    }
+   //@Override
+   //public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+   //    List<GeoPoint> geoIntersections = new ArrayList<>();
+   //    for (Intersectable intersectable : Geometry) {
+   //        List<GeoPoint> intersections = intersectable.findGeoIntersections(ray);
+   //        if (intersections != null) {
+   //            geoIntersections.addAll(intersections);
+   //        }
+   //    }
+   //    return geoIntersections.isEmpty() ? null : geoIntersections;
+   //}
+   @Override
+   public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+       List<GeoPoint> geoIntersections = new ArrayList<>();
+       for (Intersectable intersectable : Geometry) {
+           List<GeoPoint> intersections = intersectable.findGeoIntersectionsHelper(ray, maxDistance);
+           if (intersections != null) {
+               geoIntersections.addAll(intersections);
+           }
+       }
+       return geoIntersections.isEmpty() ? null : geoIntersections;
+   }
 
 }

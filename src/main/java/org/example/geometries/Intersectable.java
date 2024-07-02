@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class Intersectable {
     /**
      * findIntersections function returns a list of intersection points of a ray with the geometry
+     *
      * @param ray the ray that intersects the geometry
      * @return a list of intersection points of the ray with the geometry
      */
@@ -18,80 +19,70 @@ public abstract class Intersectable {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
     }
-       /**
-        * A passive data structure (PDS) representing a geometric point.
-        */
-       public static class GeoPoint {
-           /**
-            * The geometry associated with the point.
-            */
-           public Geometry geometry;
-
-           /**
-            * The point in the geometry.
-            */
-           public Point point;
-
-           /**
-            * Constructs a GeoPoint with the specified geometry and point.
-            *
-            * @param geometry the geometry associated with the point
-            * @param point the point in the geometry
-            */
-           public GeoPoint(Geometry geometry, Point point) {
-               this.geometry = geometry;
-               this.point = point;
-           }
-
-           /**
-            * Checks if this GeoPoint is equal to another object.
-            *
-            * @param obj the object to compare with
-            * @return true if the objects are equal, false otherwise
-            */
-           @Override
-           public boolean equals(Object obj) {
-               if (this == obj) return true;
-               if (obj == null || getClass() != obj.getClass()) return false;
-
-               GeoPoint geoPoint = (GeoPoint) obj;
-
-               if (geometry != geoPoint.geometry) return false;
-               return point != null ? point.equals(geoPoint.point) : geoPoint.point == null;
-           }
-
-           /**
-            * Returns a string representation of the GeoPoint.
-            *
-            * @return a string representation of the GeoPoint
-            */
-           @Override
-           public String toString() {
-               return "GeoPoint{" +
-                       "geometry=" + geometry +
-                       ", point=" + point +
-                       '}';
-           }
-       }
 
     /**
-     * Finds the geometric intersections with the given ray.
-     * This method follows the NVI (Non-Virtual Interface) pattern and delegates the actual work to the protected method {@code findGeoIntersectionsHelper}.
+     * findGeoIntersections function returns a list of intersection points of a ray with the geometry
      *
-     * @param ray the ray for which intersections are to be found
-     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     * @param ray the ray that intersects the geometry
+     * @return a list of intersection points of the ray with the geometry
      */
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return findGeoIntersectionsHelper(ray);
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
     /**
-     * Finds the geometric intersections with the given ray.
-     * This method is meant to be overridden by subclasses to provide the actual intersection logic.
+     * findGeoIntersections function returns a list of intersection points of a ray with the geometry
      *
-     * @param ray the ray for which intersections are to be found
-     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     * @param ray         the ray that intersects the geometry
+     * @param maxDistance the maximum distance from the ray head to the intersection point
+     * @return a list of intersection points of the ray with the geometry
      */
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelper(ray, maxDistance);
+    }
 
-   }
+    /**
+     * findGeoIntersectionsHelper function returns a list of intersection points of a ray with the geometry
+     *
+     * @param ray the ray that intersects the geometry
+     * @return a list of intersection points of the ray with the geometry
+     */
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance);
+
+
+    /**
+     * GeoPoint class is a helper class that holds a geometry and a point
+     */
+    public static class GeoPoint {
+        public Geometry geometry;
+        public Point point;
+
+        /**
+         * GeoPoint constructor
+         *
+         * @param geometry the geometry
+         * @param point    the point
+         */
+        public GeoPoint(Geometry geometry, Point point) {
+            this.geometry = geometry;
+            this.point = point;
+
+        }
+
+        @Override
+        public final boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof GeoPoint geoPoint)) return false;
+
+            return geometry == geoPoint.geometry && point.equals(geoPoint.point);
+        }
+
+        @Override
+        public String toString() {
+            return "GeoPoint{" +
+                    "geometry=" + geometry +
+                    ", point=" + point +
+                    '}';
+        }
+    }
+}

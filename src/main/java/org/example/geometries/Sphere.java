@@ -3,7 +3,6 @@ package org.example.geometries;
 import org.example.primitives.Point;
 import org.example.primitives.Ray;
 import org.example.primitives.Vector;
-import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -72,13 +71,54 @@ public class Sphere extends RadialGeometry {
 
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<Point> intersections = findIntersections(ray);
-        if (intersections == null) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        // if the ray starts at the center of the sphere
+        if (ray.getHead().equals(center)) {
+            return alignZero(this.radius - maxDistance) > 0 ? null : List.of(new GeoPoint(this, ray.getPoint(this.radius)));
+        }
+        //check if there is intersection between them
+        Vector v = center.subtract(ray.getHead());
+
+        double tm = alignZero(ray.getDirection().dotProduct(v));
+
+        //check if the ray is tangent to the sphere
+        double d = alignZero(Math.sqrt(v.lengthSquared() - tm * tm));
+        if (d >= radius) return null;
+        double th = alignZero(Math.sqrt(radius * radius - d * d));
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
+        if (t2 <= 0) {
             return null;
         }
-        return intersections.stream()
-                .map(point -> new GeoPoint(this, point))
-                .collect(Collectors.toList());
+        if (t1 <= 0) {
+            // One intersection point is behind the ray, the other is in front
+            //We will check that our point is at the appropriate distance
+            if (alignZero(maxDistance - t2) > 0) {
+                return List.of(new GeoPoint(this, ray.getPoint(t2)));
+            }
+        } else {
+            // Both intersection points are in front of the ray
+            //We will check that our point is at the appropriate distance
+            if (alignZero(maxDistance - t1) > 0 && alignZero(maxDistance - t2) > 0) {
+                return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
+            } else if (alignZero(maxDistance - t1) > 0) {
+                return List.of(new GeoPoint(this, ray.getPoint(t1)));
+            } else {
+                return List.of(new GeoPoint(this, ray.getPoint(t2)));
+            }
+        }
+
+        return null;
     }
+        //@Override
+        //protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        //    List<Point> intersections = findIntersections(ray);
+        //    if (intersections == null) {
+        //        return null;
+        //    }
+        //    return intersections.stream()
+        //            .map(point -> new GeoPoint(this, point))
+        //            .collect(Collectors.toList());
+        //}
+
 }
