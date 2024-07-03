@@ -147,4 +147,6 @@ public class IntegrationTests {
                 new Point(0, 20, -2));
         assertEquals(2, intersectionsSum(camera, triangle), "Triangle is in front of the view plane at an angle");
     }
+
+
 }
