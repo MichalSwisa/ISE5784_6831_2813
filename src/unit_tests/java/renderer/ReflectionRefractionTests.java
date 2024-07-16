@@ -39,15 +39,16 @@ public class ReflectionRefractionTests {
     @Test
     public void twoSpheres() {
         scene.geometries.add(
-                new Sphere(new Point(0, 0, -50), 50d).setEmission(new Color(BLUE))
+                new Sphere(new Point(0, 0, -50), 200d).setEmission(new Color(BLUE))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
-                new Sphere(new Point(0, 0, -50), 25d).setEmission(new Color(RED))
+                new Sphere(new Point(0, 0, -50), 100d).setEmission(new Color(RED))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
         scene.lights.add(
                 new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2))
                         .setKl(0.0004).setKq(0.0000006));
 
         cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
+                .ifImprovment(false)
                 .setVpSize(150, 150)
                 .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500))
                 .build()
@@ -117,62 +118,6 @@ public class ReflectionRefractionTests {
 
     @Test
     public void generalPicture() {
-        //scene.geometries.add(
-        //      new Sphere(new Point(0, -10, -120), 10d).setEmission(new Color(BLUE))
-        //            .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
-        //        new Sphere(new Point(0, 0, -120), 25d).setEmission(new Color(RED))
-        //              .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-        //new Tube(new Ray(new Point(10, 5, -70), new Vector(0, 0,-1)), 20d).setEmission(new Color(GREEN))
-        //             .setMaterial(new Material().setKd(0.7).setKs(0.5).setShininess(80)),
-        // new Triangle(new Point(-120, -120, -85), new Point(-70, 70, -140), new Point(75, 75, -150))
-        ///            .setMaterial(new Material().setKd(0.3).setKs(0.3).setShininess(60)));
-        //scene.lights.add(
-        //      new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2))
-        //            .setKl(0.0004).setKq(0.0000006));
-        //scene.lights.add(
-        //      new DirectionalLight(new Color(400, 200, 0), new Vector(-1, -1, -1)));
-
-        //cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
-        //      .setVpSize(150, 150)
-        //    .setImageWriter(new ImageWriter("general picture", 500, 500))
-        //  .build()
-        //.renderImage()
-        //.writeToImage();
-
-
-       //scene.geometries.add(
-       //        new Sphere(new Point(-50, 0, -100), 50d).setEmission(new Color(0, 0, 255)) // Blue sphere
-       //                .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
-       //        new Sphere(new Point(50, 0, -100), 30d).setEmission(new Color(0, 255, 0)) // Green sphere
-       //                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100).setKr(0.5)),
-       //        new Polygon(new Point(-60, -50, -150), new Point(60, -50, -150), new Point(60, -50, -50), new Point(-60, -50, -50)) // Colorful polygon
-       //                .setEmission(new Color(50, 100, 150))
-       //                .setMaterial(new Material().setKd(0.3).setKs(0.3).setShininess(50).setKr(0.3)),
-       //        new Polygon(new Point(-200, -50, -150), new Point(200, -50, -150), new Point(100, -50, 50), new Point(-100, -50, 50)) // Colorful polygon
-       //                .setEmission(new Color(50, 100, 150))
-       //                .setMaterial(new Material().setKd(0.3).setKs(0.3).setShininess(50).setKr(0.3)),
-       //        new Triangle(new Point(-20, -50, -100), new Point(20, -50, -100), new Point(0, 50, -100)) // Orange prism
-       //                .setEmission(new Color(255, 165, 0)) // Orange color
-       //                .setMaterial(new Material().setKd(0.4).setKs(0.4).setShininess(90)));
-
-       //scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
-
-       //scene.lights.add(
-       //        new DirectionalLight(new Color(400, 300, 300), new Vector(-1, -1, -1)));
-       //scene.lights.add(
-       //        new PointLight(new Color(500, 300, 0), new Point(50, 50, 50))
-       //                .setKl(0.0005).setKq(0.0005));
-       //scene.lights.add(
-       //        new SpotLight(new Color(600, 400, 400), new Point(-50, -50, 25), new Vector(1, 1, -2))
-       //                .setKl(0.0001).setKq(0.0001));
-
-       //cameraBuilder.setLocation(new Point(0, 0, 300)).setVpDistance(300)
-       //        .setVpSize(200, 200)
-       //        .setImageWriter(new ImageWriter("general picture", 500, 500))
-       //        .build()
-       //        .renderImage()
-       //        .writeToImage();
-
         scene.geometries.add(
                 new Sphere(new Point(-50, 0, -100), 50d).setEmission(new Color(0, 0, 255)) // Blue sphere
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
@@ -202,9 +147,57 @@ public class ReflectionRefractionTests {
                 new SpotLight(new Color(600, 400, 400), new Point(-50, -50, 25), new Vector(1, 1, -2))
                         .setKl(0.0001).setKq(0.0001));
 
-        cameraBuilder.setLocation(new Point(0, 0, 300)).setVpDistance(300)
+        cameraBuilder.setLocation(new Point(0, 0, 300))
+                .setVpDistance(300)
+                .ifImprovment(true)
+                .setBeamRays(100)
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("general picture", 500, 500))
+                .build()
+                .renderImage()
+                .writeToImage();
+    }
+
+    @Test
+    public void newPic() {
+        scene.geometries.add(
+                new Cylinder(new Ray(new Point(-250, -50, -100),new Vector(0,1,0)), 500d, 10d)
+                        .setEmission(new Color(153,51,0)).setMaterial(new Material().setKd(0.3).setKs(0.2).setShininess(80).setKt(0.4)),
+                new Sphere(new Point(-100, 100, -200), 30d).setEmission(new Color(YELLOW)) // Green sphere
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(250).setKr(0.5)),
+                new Polygon(new Point(-60, -50, -150), new Point(60, -50, -150), new Point(60, -50, -50), new Point(-60, -50, -50)) // Colorful polygon
+                        .setEmission(new Color(50, 100, 150))
+                        .setMaterial(new Material().setKd(0.3).setKs(0.3).setShininess(50).setKr(0.3)),
+                new Polygon(new Point(-200, -250, -50), new Point(200, -250, -50), new Point(200, -20, -50), new Point(-200, -20, -50)) // Colorful polygon
+                        .setEmission(new Color(GREEN))
+                        .setMaterial(new Material().setKd(0.3).setKs(0.3).setShininess(50).setKr(0.3)),
+                new Triangle(new Point(0, 0, 0), new Point(100, 0, 0), new Point(50, 50, 0)) // Orange prism
+                        .setEmission(new Color(RED))
+                        .setMaterial(new Material().setKd(0.4).setKs(0.4).setShininess(90)),
+                //new Polygon(new Point(10, 0, 0), new Point(90,0,0), new Point(10,-80,0),new Point(90,-80,0))
+                  //      .setEmission(new Color(255, 165, 0))
+                    //    .setMaterial(new Material().setKd(0.4).setKs(0.4).setShininess(90))
+                new Polygon(new Point(10, -50, 0), new Point(90, -50, 0), new Point(90, 0, 0), new Point(10, 0, 0)) // Base of the house
+                        .setEmission(new Color(150, 75, 0))
+                        .setMaterial(new Material().setKd(0.4).setKs(0.4).setShininess(90)));
+
+        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
+
+        scene.lights.add(
+                new DirectionalLight(new Color(YELLOW), new Vector(-1, 1, 0)));
+        scene.lights.add(
+                new PointLight(new Color(500, 300, 0), new Point(50, 50, 50))
+                        .setKl(0.0005).setKq(0.0005));
+        scene.lights.add(
+                new SpotLight(new Color(YELLOW), new Point(-100, 100, -200), new Vector(1, -1, -2))
+                        .setKl(0.0001).setKq(0.0001));
+        scene.lights.add(
+                new SpotLight(new Color(600, 400, 400), new Point(-50, -50, 25), new Vector(1, 1, -2))
+                        .setKl(0.0001).setKq(0.0001));
+
+        cameraBuilder.setLocation(new Point(0, 0, 300)).setVpDistance(300)
+                .setVpSize(200, 200)
+                .setImageWriter(new ImageWriter("new pic", 500, 500))
                 .build()
                 .renderImage()
                 .writeToImage();

@@ -6,6 +6,7 @@ import org.example.primitives.*;
 import org.example.scene.Scene;
 
 import java.util.List;
+import java.util.LinkedList;
 
 import static org.example.primitives.Util.alignZero;
 import static org.example.primitives.Util.isZero;
@@ -31,6 +32,25 @@ public class SimpleRayTracer extends RayTracerBase {
             return scene.background;
         }
         return calcColor(point, ray);
+    }
+
+    @Override
+    public Color traceRay(List<Ray> rays) {
+        List<Color> colors = new LinkedList<>();
+        Color color;
+        List<GeoPoint> intersectPoints;
+        GeoPoint closestPoint;
+        for (Ray ray : rays) {
+            intersectPoints = scene.geometries.findGeoIntersections(ray);
+            if (intersectPoints == null) {
+                color = scene.background;
+            } else {
+                closestPoint = ray.findClosestGeoPoint(intersectPoints);
+                color = calcColor(closestPoint, ray);
+            }
+            colors.add(color);
+        }
+        return Color.average(colors);
     }
 
     /**
@@ -236,7 +256,6 @@ public class SimpleRayTracer extends RayTracerBase {
 
         for (GeoPoint g : Intersection)
             if (g.geometry.getMaterial().kT == Double3.ZERO)
-
                 return false;
         return true;
     }
