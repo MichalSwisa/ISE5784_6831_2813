@@ -128,7 +128,7 @@ public class Camera implements Cloneable {
 
         pointCenterPixel = pointCenter;
         yI = /*-1 **/ (row - (nY - 1) / 2d) * ratioY;
-        xJ = (column - (nX - 1) / 2d) * ratioX;
+        xJ = -1*(column - (nX - 1) / 2d) * ratioX;
         if (!isZero(xJ)) {
             pointCenterPixel = pointCenterPixel.add(vRight.scale(xJ));
         }
