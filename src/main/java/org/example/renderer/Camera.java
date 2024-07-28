@@ -56,27 +56,34 @@ public class Camera implements Cloneable {
     // * @param i  row index of the pixel
     // * @return the constructed ray
     // */
-    public Ray constructRay(int nX, int nY, int j, int i) {
-        // Calculate the center of the view plane
-        Point pCenter = position.add(vTo.scale(viewPlaneDistance));
-
-        // Calculate the pixel size
-        double rX = viewPlaneWidth / nX;
-        double rY = viewPlaneHeight / nY;
-
-        // Calculate the pixel center
-        double xJ = (j - (nX - 1) / 2.0) * rX;
-        double yI = -(i - (nY - 1) / 2.0) * rY;
-
-        Point pIJ = pCenter;
-
-        if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
-        if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
-
-        Vector vIJ = pIJ.subtract(position).normalize();
-
-        return new Ray(position, vIJ);
-    }
+    //public Ray constructRay(int nX, int nY, int j, int i) {
+        //    // Calculate the center of the view plane
+        //    Point pCenter = position.add(vTo.scale(viewPlaneDistance/*distance*/));
+        //    //position.add(vTo.scale(distance))
+        //    // Calculate the pixel size
+        //    double rX = viewPlaneWidth / nX;
+        //    double rY = viewPlaneHeight / nY;
+        //
+        //    // Calculate the pixel center
+        //    double xJ = (j - (nX - 1) / 2.0) * rX;
+        //    double yI = -(i - (nY - 1) / 2.0) * rY;
+        //
+        //    Point pIJ = pCenter;
+        //    //yI = /*-1 **/ (row - (nY - 1) / 2d) * ratioY;
+        //    //xJ = -1*(column - (nX - 1) / 2d) * ratioX;
+        //    if (!isZero(xJ)) {
+            //        pIJ = pIJ.add(vRight.scale(xJ));
+            //    }
+        //    if (!isZero(yI)) {
+            //        pIJ = pIJ.add(vUp.scale(yI));
+            //    }
+        //    //if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
+        //    //if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
+        //
+        //    Vector vIJ = pIJ.subtract(position).normalize();
+        //
+        //    return new Ray(position, vIJ);
+        //}
     //public Ray constructRay(int nX, int nY, int column, int row) {
      //   return constructRay(nX, nY, column, row, this.width, this.height);
     //}
@@ -112,48 +119,48 @@ public class Camera implements Cloneable {
      * @param row    row
      * @return ray from p0 the center to the center of the pixel in row column
      */
-    public List<Ray> constructBeamRays(int nX, int nY, int column, int row) {
-        if (lineBeamRays == 1) {
-            return List.of(constructRay(nX, nY, column, row/*, width, height*/));
-        }
-        Vector dir;
-        Point pointCenter, pointCenterPixel;
-        Ray ray;
-        double ratioY, ratioX, yI, xJ;
-        List<Ray> rays = new LinkedList<>();
-
-        pointCenter = position.add(vTo.scale(distance));
-        ratioY = height / nY;
-        ratioX = width / nX;
-
-        pointCenterPixel = pointCenter;
-        yI = /*-1 **/ (row - (nY - 1) / 2d) * ratioY;
-        xJ = -1*(column - (nX - 1) / 2d) * ratioX;
-        if (!isZero(xJ)) {
-            pointCenterPixel = pointCenterPixel.add(vRight.scale(xJ));
-        }
-        if (!isZero(yI)) {
-            pointCenterPixel = pointCenterPixel.add(vUp.scale(yI));
-        }
-
-        for (int internalRow = 0; internalRow < lineBeamRays; internalRow++) {
-            for (int internalColumn = 0; internalColumn < lineBeamRays; internalColumn++) {
-                double rY = ratioY / lineBeamRays;
-                double rX = ratioX / lineBeamRays;
-                double ySampleI = -1 * (internalRow - (rY - 1) / 2d) * rY;
-                double xSampleJ = (internalColumn - (rX - 1) / 2d) * rX;
-                Point pIJ = pointCenterPixel;
-                if (!isZero(xSampleJ)) {
-                    pIJ = pIJ.add(vRight.scale(xSampleJ));
-                }
-                if (!isZero(ySampleI)) {
-                    pIJ = pIJ.add(vUp.scale(-ySampleI));
-                }
-                ray = new Ray(position, pIJ.subtract(position));
-
-                rays.add(ray);
-            }
-        }
+    //public List<Ray> constructBeamRays(int nX, int nY, int column, int row) {
+    //    if (lineBeamRays == 1) {
+    //        return List.of(constructRay(nX, nY, column, row/*, width, height*/));
+    //    }
+    //    Vector dir;
+    //    Point pointCenter, pointCenterPixel;
+    //    Ray ray;
+    //    double ratioY, ratioX, yI, xJ;
+    //    List<Ray> rays = new LinkedList<>();
+//
+    //    pointCenter = position.add(vTo.scale(/*distance*/viewPlaneDistance));
+    //    ratioY = height / nY;
+    //    ratioX = width / nX;
+//
+    //    pointCenterPixel = pointCenter;
+    //    yI = /*-1 **/ (row - (nY - 1) / 2d) * ratioY;
+    //    xJ = -1*(column - (nX - 1) / 2d) * ratioX;
+    //    if (!isZero(xJ)) {
+    //        pointCenterPixel = pointCenterPixel.add(vRight.scale(xJ));
+    //    }
+    //    if (!isZero(yI)) {
+    //        pointCenterPixel = pointCenterPixel.add(vUp.scale(yI));
+    //    }
+//
+    //    for (int internalRow = 0; internalRow < lineBeamRays; internalRow++) {
+    //        for (int internalColumn = 0; internalColumn < lineBeamRays; internalColumn++) {
+    //            double rY = ratioY / lineBeamRays;
+    //            double rX = ratioX / lineBeamRays;
+    //            double ySampleI = -1 * (internalRow - (rY - 1) / 2d) * rY;
+    //            double xSampleJ = (internalColumn - (rX - 1) / 2d) * rX;
+    //            Point pIJ = pointCenterPixel;
+    //            if (!isZero(xSampleJ)) {
+    //                pIJ = pIJ.add(vRight.scale(xSampleJ));
+    //            }
+    //            if (!isZero(ySampleI)) {
+    //                pIJ = pIJ.add(vUp.scale(-ySampleI));
+    //            }
+    //            ray = new Ray(position, pIJ.subtract(position));
+//
+    //            rays.add(ray);
+    //        }
+    //    }
         /*
                 double rY = internalHeight / internalCountHeight;
                 double rX = internalWidth / internalCountWidth;
@@ -169,9 +176,77 @@ public class Camera implements Cloneable {
                 rays.add(new Ray(p0, pIJ.subtract(pC)));
          */
 
-        return rays;
+   //     return rays;
+   // }
+
+    public Ray constructRay(int nX, int nY, int j, int i) {
+        Point pCenter = position.add(vTo.scale(viewPlaneDistance));
+        double rX = viewPlaneWidth / nX;
+        double rY = viewPlaneHeight / nY;
+
+        double xJ = (j - (nX - 1) / 2.0) * rX;
+        double yI = -(i - (nY - 1) / 2.0) * rY;
+
+        Point pIJ = pCenter;
+        if (!isZero(xJ)) {
+            pIJ = pIJ.add(vRight.scale(xJ));
+        }
+        if (!isZero(yI)) {
+            pIJ = pIJ.add(vUp.scale(yI));
+        }
+
+        Vector vIJ = pIJ.subtract(position).normalize();
+
+        // הדפסת מידע על הקרן שנוצרה
+       // System.out.println("constructRay: " + new Ray(position, vIJ));
+
+        return new Ray(position, vIJ);
     }
 
+    public List<Ray> constructBeamRays(int nX, int nY, int column, int row) {
+        if (lineBeamRays == 1) {
+            return List.of(constructRay(nX, nY, column, row));
+        }
+        Point pointCenter = position.add(vTo.scale(viewPlaneDistance));
+        double ratioY = viewPlaneHeight / nY;
+        double ratioX = viewPlaneWidth / nX;
+
+        double yI = (row - (nY - 1) / 2d) * ratioY;
+        double xJ = (column - (nX - 1) / 2d) * ratioX;
+
+        Point pointCenterPixel = pointCenter;
+        if (!isZero(xJ)) {
+            pointCenterPixel = pointCenterPixel.add(vRight.scale(xJ));
+        }
+        if (!isZero(yI)) {
+            pointCenterPixel = pointCenterPixel.add(vUp.scale(-yI));
+        }
+
+        List<Ray> rays = new LinkedList<>();
+        double rY = ratioY / lineBeamRays;
+        double rX = ratioX / lineBeamRays;
+        for (int internalRow = 0; internalRow < lineBeamRays; internalRow++) {
+            for (int internalColumn = 0; internalColumn < lineBeamRays; internalColumn++) {
+                double ySampleI = (internalRow - (lineBeamRays - 1) / 2.0) * rY;
+                double xSampleJ = (internalColumn - (lineBeamRays - 1) / 2.0) * rX;
+                Point pIJ = pointCenterPixel;
+                if (!isZero(xSampleJ)) {
+                    pIJ = pIJ.add(vRight.scale(xSampleJ));
+                }
+                if (!isZero(ySampleI)) {
+                    pIJ = pIJ.add(vUp.scale(ySampleI));
+                }
+                Ray ray = new Ray(position, pIJ.subtract(position).normalize());
+
+                // הדפסת מידע על הקרן שנוצרה
+               // System.out.println("constructBeamRays: " + ray);
+
+                rays.add(ray);
+            }
+        }
+
+        return rays;
+    }
 
     @Override
     public Camera clone() {
