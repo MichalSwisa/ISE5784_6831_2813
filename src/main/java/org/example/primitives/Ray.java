@@ -1,7 +1,8 @@
 package org.example.primitives;
 
-import java.util.List;
 import org.example.geometries.Intersectable.GeoPoint;
+
+import java.util.List;
 
 import static org.example.primitives.Util.isZero;
 
@@ -9,6 +10,7 @@ import static org.example.primitives.Util.isZero;
  * Represents a ray in a three-dimensional space.
  */
 public class Ray {
+    private static final double DELTA = 0.00001;
     /**
      * The starting point of the ray.
      */
@@ -17,8 +19,6 @@ public class Ray {
      * The direction vector of the ray, normalized.
      */
     private final Vector direction;
-
-    private static final double DELTA = 0.00001;
 
     /**
      * Constructs a ray with a given starting point and direction.
@@ -30,17 +30,20 @@ public class Ray {
         this.head = head;
         this.direction = direction.normalize();
     }
+
     /**
      * constructor for Ray class with normal to the direction
-     * @param head the head of the ray
+     *
+     * @param head      the head of the ray
      * @param direction the direction of the ray
-     * @param normal the normal to the direction
+     * @param normal    the normal to the direction
      */
     public Ray(Point head, Vector direction, Vector normal) {
         Vector delta = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : -DELTA);
         this.head = head.add(delta);
         this.direction = direction.normalize();
     }
+
     /**
      * getter for head
      */
@@ -100,8 +103,7 @@ public class Ray {
      * @param points the list of points.
      * @return the closest point to the ray's origin, or null if the list is empty.
      */
-    public Point findClosestPoint(List<Point> points)
-    {
+    public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
@@ -113,19 +115,16 @@ public class Ray {
      * @param geoPoints list of GeoPoints for search
      * @return closestPoint closest GeoPoint to p0
      */
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints)
-    {
-        if ( geoPoints == null || geoPoints.isEmpty() )
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints) {
+        if (geoPoints == null || geoPoints.isEmpty())
             return null;
 
         double minDistance = Double.POSITIVE_INFINITY;
         GeoPoint closestPoint = null;
 
-        for (var p : geoPoints)
-        {
+        for (var p : geoPoints) {
             double distance = p.point.distanceSquared(head);
-            if (distance < minDistance)
-            {
+            if (distance < minDistance) {
                 minDistance = distance;
                 closestPoint = p;
             }

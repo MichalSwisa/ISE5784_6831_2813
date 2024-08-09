@@ -7,6 +7,7 @@ public class Vector extends Point {
     public static final Vector X = new Vector(1, 0, 0);
     public static final Vector Y = new Vector(0, 1, 0);
     public static final Vector Z = new Vector(0, 0, 1);
+
     /**
      * Constructs a vector with the given x, y, and z coordinates.
      *
@@ -17,7 +18,7 @@ public class Vector extends Point {
      */
     public Vector(double x, double y, double z) {
         super(x, y, z);
-        if (x == 0 && y == 0 && z == 0){
+        if (x == 0 && y == 0 && z == 0) {
             throw new IllegalArgumentException("ZERO vector not allowed");
         }
     }
@@ -114,7 +115,7 @@ public class Vector extends Point {
      *
      * @param vector the vector to compare with this vector
      * @return {@code true} if both vectors are unit vectors and either equal or opposites;
-     *         {@code false} otherwise
+     * {@code false} otherwise
      */
     public boolean isSameNormal(Vector vector) {
         if (!(Util.isZero(length() - 1) && Util.isZero(vector.length() - 1))) {

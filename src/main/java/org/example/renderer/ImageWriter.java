@@ -2,6 +2,8 @@ package org.example.renderer;
 
 import org.example.primitives.Color;
 
+import org.example.renderer.Pixel;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +20,15 @@ import java.util.logging.Logger;
  * @author Dan
  */
 public class ImageWriter {
+    private int row = 0;
+    private int col = -1;
+    private long counter = 0;
+    private boolean print = false;
+    private int percents = 0;
+    private long nextCounter = 0;
+    private long totalPixels = 0;
+
+
     /**
      * Directory path for the image file generation - relative to the user
      * directory
@@ -59,6 +70,9 @@ public class ImageWriter {
         this.nY = nY;
 
         image = new BufferedImage(nX, nY, BufferedImage.TYPE_INT_RGB);
+        this.totalPixels = (long) nX * nY;
+        this.print = true;
+        this.nextCounter = totalPixels / 100;
     }
 
     // ***************** Getters/Setters ********************** //
@@ -113,6 +127,8 @@ public class ImageWriter {
     public void writePixel(int xIndex, int yIndex, Color color) {
         image.setRGB(xIndex, yIndex, color.getColor().getRGB());
     }
+
+
 
 }
 

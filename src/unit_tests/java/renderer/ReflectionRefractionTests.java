@@ -243,7 +243,9 @@ public class ReflectionRefractionTests {
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("mini project 1", 500, 500))
                 .ifImprovment(true)
-                .setBeamRays(50)
+                .setBeamRays(500)
+                .setMultithreading(8)
+                .setDebugPrint(1.0)
                 .build()
                 .renderImage()
                 .writeToImage();

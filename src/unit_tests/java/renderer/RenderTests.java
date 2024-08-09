@@ -88,8 +88,8 @@ public class RenderTests {
                 .renderImage()
                 .printGrid(100, new Color(WHITE))
                 .writeToImage();
-    }
 
+    }
     ///** Test for XML based scene - for bonus */
     //@Test
     //public void basicRenderXml() {
