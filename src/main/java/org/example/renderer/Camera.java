@@ -26,7 +26,8 @@ public class Camera implements Cloneable {
     private double viewPlaneDistance = 0.0;
     private ImageWriter imageWriter;
     private RayTracerBase rayTrace;
-    private int lineBeamRays = 1;
+    private int rowBeamRays = 1;
+    private int columnBeamRays = 1;
     private int distance = 1;
     private double width = -1d;
     private double height = -1d;
@@ -95,7 +96,7 @@ public class Camera implements Cloneable {
      * @return ray from p0 the center to the center of the pixel in row column
      */
     public List<Ray> constructBeamRays(int nX, int nY, int column, int row) {
-        if (lineBeamRays == 1) {
+        if (rowBeamRays == 1 && columnBeamRays == 1) {
             return List.of(constructRay(nX, nY, column, row));
         }
         Point pointCenter = position.add(vTo.scale(viewPlaneDistance));
@@ -114,12 +115,12 @@ public class Camera implements Cloneable {
         }
 
         List<Ray> rays = new LinkedList<>();
-        double rY = ratioY / lineBeamRays;
-        double rX = ratioX / lineBeamRays;
-        for (int internalRow = 0; internalRow < lineBeamRays; internalRow++) {
-            for (int internalColumn = 0; internalColumn < lineBeamRays; internalColumn++) {
-                double ySampleI = (internalRow - (lineBeamRays - 1) / 2.0) * rY;
-                double xSampleJ = (internalColumn - (lineBeamRays - 1) / 2.0) * rX;
+        double rY = ratioY / columnBeamRays;
+        double rX = ratioX / rowBeamRays;
+        for (int internalRow = 0; internalRow < rowBeamRays; internalRow++) {
+            for (int internalColumn = 0; internalColumn < columnBeamRays; internalColumn++) {
+                double ySampleI = (internalRow - (columnBeamRays - 1) / 2.0) * rY;
+                double xSampleJ = (internalColumn - (rowBeamRays - 1) / 2.0) * rX;
                 Point pIJ = pointCenterPixel;
                 if (!isZero(xSampleJ)) {
                     pIJ = pIJ.add(vRight.scale(xSampleJ));
@@ -329,12 +330,13 @@ public class Camera implements Cloneable {
          * @param beamRays The total number of beam rays to set.
          * @return This Camera object with the updated beam rays configuration.
          */
-        public Builder setBeamRays(int beamRays) {
+        public Builder setBeamRays(int rowBeamRays, int columnBeamRays) {
+            if (rowBeamRays < 1 || columnBeamRays < 1) {
+                throw new IllegalArgumentException("Row Rays and Column Rays must be greater than zero.");
+            }
             if (this.camera.improvment) {
-                this.camera.lineBeamRays = (int) Math.sqrt(beamRays);
-                if (!isZero(this.camera.lineBeamRays - Math.sqrt(beamRays))) {
-                    this.camera.lineBeamRays += 1;
-                }
+                this.camera.rowBeamRays = rowBeamRays;
+                this.camera.columnBeamRays = columnBeamRays;
             }
             return this;
         }

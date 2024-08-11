@@ -3,10 +3,11 @@ package org.example.renderer;
 import org.example.geometries.Intersectable.GeoPoint;
 import org.example.lighting.LightSource;
 import org.example.primitives.*;
+import org.example.primitives.Vector;
 import org.example.scene.Scene;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.example.primitives.Util.alignZero;
 import static org.example.primitives.Util.isZero;
@@ -20,9 +21,23 @@ public class SimpleRayTracer extends RayTracerBase {
 
     private static final double MIN_CALC_COLOR_K = 0.001;
     private static final Double3 INITIAL_K = Double3.ONE;
+    private  boolean isAdaptiveGrid;
+    private  int maxLevel;
 
     public SimpleRayTracer(Scene scene) {
         super(scene);
+        this.isAdaptiveGrid = false;
+        this.maxLevel = 1;
+    }
+
+    public SimpleRayTracer setAdaptiveGrid(boolean isAdaptiveGrid) {
+        this.isAdaptiveGrid = isAdaptiveGrid;
+        return this;
+    }
+
+    public SimpleRayTracer setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
+        return this;
     }
 
     @Override
@@ -36,21 +51,72 @@ public class SimpleRayTracer extends RayTracerBase {
 
     @Override
     public Color traceRay(List<Ray> rays) {
-        List<Color> colors = new LinkedList<>();
-        Color color;
-        List<GeoPoint> intersectPoints;
-        GeoPoint closestPoint;
-        for (Ray ray : rays) {
-            intersectPoints = scene.geometries.findGeoIntersections(ray);
-            if (intersectPoints == null) {
-                color = scene.background;
-            } else {
-                closestPoint = ray.findClosestGeoPoint(intersectPoints);
-                color = calcColor(closestPoint, ray);
-            }
-            colors.add(color);
+        Color result;
+        if (isAdaptiveGrid && rays.size() > 4) {
+            Wrapper<Color> colorWrapper = new Wrapper<>(Color.BLACK);
+            Map<Ray, Color> map = new HashMap<>();
+            traceRayCube(colorWrapper, rays, map);
+            result = colorWrapper.variable.reduce(rays.size());
+        } else {
+            List<Color> colors = rays.stream().map(this::traceRay).collect(Collectors.toList());
+            result = Color.average(colors, colors.size());
         }
-        return Color.average(colors);
+        return result;
+    }
+
+    public void traceRayCube(Wrapper<Color> colorWrapper, List<Ray> allRays, Map<Ray, Color> map) {
+        Color color = null;
+        List<Ray> rays;
+        int n, level;
+        Pair<List<Ray>, Integer> pair;
+        Stack<Pair<List<Ray>, Integer>> stack = new Stack<>();
+        stack.add(new Pair<>(allRays, maxLevel));
+
+        while (!stack.isEmpty()) {
+            pair = stack.pop();
+            rays = pair.first;
+            level = pair.second;
+
+            if (level <= 1) {
+                for (Ray ray : rays) {
+                    colorWrapper.variable = colorWrapper.variable.add(traceRay(ray));
+                }
+                continue;
+            }
+
+            n = (int)Math.sqrt(rays.size());
+            /* Indexes of: topLeft, topRight, bottomLeft, bottomRight */
+            int[] indexes = {0, (n - 1), (n * (n - 1)), (n * n - 1)};
+
+            List<Color> cubeColors = new ArrayList<>(4);
+
+            for (int index : indexes) {
+                Ray ray = rays.get(index);
+                if (map.containsKey(ray)) {
+                    color = map.get(ray);
+                } else {
+                    color = traceRay(ray);
+                    map.put(ray, color);
+                }
+                cubeColors.add(color);
+            }
+
+            if (rays.size() <= 4 || Color.allSimilar(cubeColors)) {
+                colorWrapper.variable = colorWrapper.variable.add(color.scale(n * n));
+            } else {
+                for (int row = 0; row < n; row += n / 2) {
+                    for (int column = 0; column < n; column += n / 2) {
+                        List<Ray> rayList = new LinkedList<>();
+                        for (int i = row; i < row + n / 2; i++) {
+                            for (int j = column; j < column + n / 2; j++) {
+                                rayList.add(rays.get(i * n + j));
+                            }
+                        }
+                        stack.push(new Pair<>(rayList, level - 1));
+                    }
+                }
+            }
+        }
     }
 
     /**
