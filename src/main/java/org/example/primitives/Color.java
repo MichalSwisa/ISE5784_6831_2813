@@ -1,6 +1,7 @@
 package org.example.primitives;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Wrapper class for java.jwt.Color The constructors operate with any
@@ -18,6 +19,7 @@ public class Color {
 
     /** Black color = (0,0,0) */
     public static final Color BLACK = new Color();
+
 
     /** Default constructor - to generate Black Color (privately) */
     private Color() { rgb = Double3.ZERO; }
@@ -119,14 +121,32 @@ public class Color {
      * @param colors A list of colors to compute the average from.
      * @return The average color computed from the list.
      */
-    public static Color average(List<Color> colors) {
+    public static Color average(List<Color> colors, int total) {
         Double3 averageValues;
         Double3 sum = Double3.ZERO;
         for (Color c : colors) {
             sum = sum.add(c.rgb);
         }
-        averageValues = sum.reduce(colors.size());
+        averageValues = sum.reduce(total);
         return new Color(averageValues.d1, averageValues.d2, averageValues.d3);
+    }
+
+    public static boolean allSimilar(List<Color> colors) {
+        return IntStream
+                .range(1, colors.size())
+                .allMatch(index -> colors.getFirst().isSimilar(colors.get(index)));
+    }
+
+    public boolean isSimilar(Color color) {
+        return this.rgb.isSimilar(color.rgb);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Color color = (Color) obj;
+        return this.rgb.equals(color.rgb);
     }
 
     @Override

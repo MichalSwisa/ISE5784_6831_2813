@@ -23,6 +23,9 @@ public class Double3 {
    /** One's triad (1,1,1) */
    public static final Double3 ONE  = new Double3(1, 1, 1);
 
+   public static final double EPSILON = 0.1;
+
+
    /**
     * Constructor to initialize Double3 based object with its three number values
     * @param d1 first number value
@@ -43,6 +46,12 @@ public class Double3 {
       this.d1 = value;
       this.d2 = value;
       this.d3 = value;
+   }
+
+   public boolean isSimilar(Double3 other) {
+      return Math.abs(this.d1 - other.d1) <= EPSILON &&
+              Math.abs(this.d2 - other.d2) <= EPSILON &&
+              Math.abs(this.d3 - other.d3) <= EPSILON;
    }
 
    @Override

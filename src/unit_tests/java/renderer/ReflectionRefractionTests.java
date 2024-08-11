@@ -22,6 +22,8 @@ import static java.awt.Color.*;
  * @author dzilb
  */
 public class ReflectionRefractionTests {
+
+    static final int DEFAULT_BEAM_RAYS = 16;
     /**
      * Scene for the tests
      */
@@ -31,7 +33,7 @@ public class ReflectionRefractionTests {
      */
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setDirection(new Vector(0, 0, -1), Vector.Y)
-            .setRayTracer(new SimpleRayTracer(scene));
+            .setRayTracer(new SimpleRayTracer(scene)/*.setAdaptiveGrid(true).setMaxLevel(3)*/);
 
     /**
      * Produce a picture of a sphere lighted by a spot light
@@ -150,7 +152,7 @@ public class ReflectionRefractionTests {
         cameraBuilder.setLocation(new Point(0, 0, 300))
                 .setVpDistance(300)
                 .ifImprovment(true)
-                .setBeamRays(100)
+                .setBeamRays(100, 100)
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("general picture", 500, 500))
                 .build()
@@ -259,7 +261,7 @@ public class ReflectionRefractionTests {
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("mini project 1", 500, 500))
                 .ifImprovment(true)
-                .setBeamRays(500)
+                .setBeamRays(DEFAULT_BEAM_RAYS, DEFAULT_BEAM_RAYS)
                 .setMultithreading(8)
                 .setDebugPrint(1.0)
                 .build()
