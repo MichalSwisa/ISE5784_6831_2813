@@ -183,7 +183,8 @@ public class ReflectionRefractionTests {
                                 // 30, 144, 255 //blue
                         )).setMaterial(new Material().setKr(0.7)),
 
-                //eye+
+
+        //eye+
                 new Polygon(
                         new Point(-150, 0, -399),   // Leftmost point
                         new Point(-120, 30, -399),  // Upper left curve
@@ -204,6 +205,21 @@ public class ReflectionRefractionTests {
 
 
         );
+
+
+        //background
+        int startX = -250;
+        int startY = -250;
+        int endX = 250;
+        int endY = 250;
+        int radiuss = 10; // רדיוס העיגולים
+
+        for (int x = startX; x <= endX; x += 2 * radiuss) {
+            for (int y = startY; y <= endY; y += 2 * radiuss) {
+                Color color = (x + y) % (4 * radiuss) == 0 ? new Color(pink) : new Color(gray); // ורוד ואפור לסירוגין
+                scene.geometries.add(new Sphere(new Point(x, y, -450), radiuss).setEmission(color));
+            }
+        }
 
 
         // Add cylinders to simulate lines in the iris
