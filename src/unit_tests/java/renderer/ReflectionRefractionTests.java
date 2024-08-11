@@ -151,8 +151,8 @@ public class ReflectionRefractionTests {
 
         cameraBuilder.setLocation(new Point(0, 0, 300))
                 .setVpDistance(300)
-                .ifImprovment(true)
-                .setBeamRays(100, 100)
+                //.ifImprovment(true)
+                //.setBeamRays(100, 100)
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("general picture", 500, 500))
                 .build()
